@@ -6,39 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.moviemessager.databinding.FragmentDashboardBinding
 import com.example.moviemessager.databinding.FragmentNotificationsBinding
+import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
+import com.example.moviemessager.ui.base.viewBinding
+import com.example.moviemessager.ui.dashboard.DashboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotificationsFragment : Fragment() {
+class NotificationsFragment: FragmentBaseNCMVVM<NotificationsViewModel, FragmentNotificationsBinding>() {
+    override val binding: FragmentNotificationsBinding by viewBinding()
+    override val viewModel: NotificationsViewModel by viewModels()
 
-    private var _binding: FragmentNotificationsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
-
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onView() {
+        viewModel.text.observe(viewLifecycleOwner) {
+            binding.textNotifications.text=it
         }
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
