@@ -21,6 +21,7 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
         viewModel.text.observe(viewLifecycleOwner) {
             binding.textHome.text = it
         }
+        viewModel.movieTest()
     }
 
 
