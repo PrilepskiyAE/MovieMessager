@@ -48,7 +48,7 @@ object NetworkModule {
 @InstallIn(ViewModelComponent::class)
 class MovieapiModule(){
     @Provides
-    fun provideApiModule():MovieApiService=provideRetrofitMovie().create(MovieApiService::class.java)
+    fun provideApiModule(retrofit: Retrofit):MovieApiService=retrofit.create(MovieApiService::class.java)
 }
 @Module
 @InstallIn(ViewModelComponent::class)
