@@ -4,7 +4,9 @@ import com.example.moviemessager.data.apiservise.MovieApiService
 import com.example.moviemessager.data.repository.MovieRepositoryImpl
 import com.example.moviemessager.data.utils.HeaderInterceptor
 import com.example.moviemessager.di.NetworkModule.provideRetrofitMovie
+import com.example.moviemessager.domain.interactor.GetListMovieUseCase
 import com.example.moviemessager.domain.repository.MovieRepository
+import com.example.moviemessager.domain.usecase.GetListMovieUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,4 +57,10 @@ class MovieapiModule(){
 class  MovieRepositoryModule {
     @Provides
     fun provideRepositoryModule(api:MovieApiService): MovieRepository = MovieRepositoryImpl(api)
+}
+@Module
+@InstallIn(ViewModelComponent::class)
+class  MovieGetListMovieUseCaseModule {
+    @Provides
+    fun provideGetListMovieUseCaseModule(movieRepository: MovieRepository): GetListMovieUseCase=GetListMovieUseCaseImpl(movieRepository)
 }
