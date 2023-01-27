@@ -10,17 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.moviemessager.databinding.FragmentDashboardBinding
 import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
 import com.example.moviemessager.ui.home.HomeViewModel
+import com.example.moviemessager.ui.pagingadapter.MoviePagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>() {
+class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
     override val binding: FragmentDashboardBinding by viewBinding()
     override val viewModel: DashboardViewModel by viewModels()
+    private val movieAdapter=MoviePagingAdapter({})
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getMovie()
@@ -28,7 +33,7 @@ class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboa
 
     override fun onView() {
         super.onView()
-        viewModel.getMovie()
+            //viewModel.getMovie()
     }
 
     override fun onEach() {
@@ -38,11 +43,23 @@ class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboa
             else {
                 lifecycleScope.launchWhenStarted {
                     it.movieList?.let {
-                        Log.d("TAG_LOADING", "onEach: $it")
+                       movieAdapter.submitData(lifecycle, it)
                     }
                 }
             }
         }
+    }
+    private fun setAdapter() {
+        binding.rvItemsList.apply {
+            context?.let {
+                val manager = LinearLayoutManager(it)
+                layoutManager = manager
+                adapter=movieAdapter
+            }
+        }
+    }
+    override fun onRefresh() {
+        TODO("Not yet implemented")
     }
 
 }

@@ -8,5 +8,6 @@ abstract class BaseViewHolder<Item, ItemViewBinding : ViewBinding>(binding: Item
     RecyclerView.ViewHolder(binding.root) {
 
     abstract fun bind(item: Item, context: Context)
+    open fun onItemClick(item: Item) {}
 
 }
