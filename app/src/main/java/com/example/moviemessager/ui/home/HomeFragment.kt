@@ -18,10 +18,7 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     override val binding: FragmentHomeBinding by viewBinding()
     override val viewModel: HomeViewModel by viewModels()
     override fun onView() {
-        viewModel.text.observe(viewLifecycleOwner) {
-            binding.textHome.text = it
-        }
-        viewModel.movieTest()
+
     }
 
 
