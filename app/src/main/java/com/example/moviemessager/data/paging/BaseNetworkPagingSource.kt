@@ -26,7 +26,7 @@ abstract class BaseNetworkPagingSource<Item : DiffUtilModel<*>> (private val api
         val position = params.key ?: STARTING_PAGE
         val queryMap = mutableMapOf<String, Any>()
         val queriesList = mutableListOf<Pair<String, Any>>()
-        queriesList.add(Pair("pageNumber", position))
+        queriesList.add(Pair("page", position))
         if (apiQueries != null)
             queriesList.addAll(apiQueries)
         return try {

@@ -21,45 +21,29 @@ import com.example.moviemessager.ui.pagingadapter.MoviePagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>(),
-    SwipeRefreshLayout.OnRefreshListener {
+class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>() {
     override val binding: FragmentDashboardBinding by viewBinding()
     override val viewModel: DashboardViewModel by viewModels()
     private val movieAdapter=MoviePagingAdapter({})
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getMovie()
-    }
-
-    override fun onView() {
-        super.onView()
-            //viewModel.getMovie()
+        viewModel.loadMovie()
     }
 
     override fun onEach() {
-        onEach(viewModel.state) {
-            if (it.isLoading)
-                Log.d("TAG_LOADING", "onEach: $it")
-            else {
-                lifecycleScope.launchWhenStarted {
-                    it.movieList?.let {
-                       movieAdapter.submitData(lifecycle, it)
-                    }
+        onEach(viewModel.movieList){
+            it.also {
+                if (binding.rvItemsList.adapter == null)
+                    binding.rvItemsList.adapter = movieAdapter
+            }
+            lifecycleScope.launchWhenStarted {
+                if (it != null) {
+                    movieAdapter.submitData(it)
                 }
             }
-        }
-    }
-    private fun setAdapter() {
-        binding.rvItemsList.apply {
-            context?.let {
-                val manager = LinearLayoutManager(it)
-                layoutManager = manager
-                adapter=movieAdapter
+
             }
         }
     }
-    override fun onRefresh() {
-        TODO("Not yet implemented")
-    }
 
-}
+

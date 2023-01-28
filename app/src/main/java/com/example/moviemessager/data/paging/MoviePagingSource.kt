@@ -14,18 +14,15 @@ class MoviePagingSource( apiQueries: List<Pair<String,Any>>,private val api: Mov
     override suspend fun getDataFromSource(queryMap: Map<String, Any>): ActionResult<Pair<List<MovieModel>, Int>> {
         val movieList = mutableListOf<MovieModel>()
         val apiData = makeApiCall {
-            coroutineScope {
-                async {
+
                     analyzeResponse(
 
                        api.getMovieList(queryMap = queryMap)
                     )
-                }.await()
-            }
         }
         return when(apiData){
             is ActionResult.Success -> {
-                apiData.data.results?.onEach {
+                apiData.data.results.onEach {
                   movieList.add(MovieModel.from(it))
                 }
                  ActionResult.Success(Pair(movieList, apiData.data.total_pages))

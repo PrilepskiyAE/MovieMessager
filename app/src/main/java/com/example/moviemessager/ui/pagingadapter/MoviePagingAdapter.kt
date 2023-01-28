@@ -3,7 +3,10 @@ package com.example.moviemessager.ui.pagingadapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.viewbinding.ViewBinding
+import com.bumptech.glide.Glide
+import com.example.moviemessager.R
 
 import com.example.moviemessager.databinding.ItemMovieBinding
 import com.example.moviemessager.domain.model.MovieModel
@@ -28,8 +31,12 @@ class MoviePagingAdapter(
             with(binding) {
                 when (this) {
                     is ItemMovieBinding -> {
-                        textView.text=item.title
+                        filmName.text=item.title
+                        Glide.with(itemView)
+                            .load("https://image.tmdb.org/t/p/w500"+item.poster_path)
+                            .into(filmCover)
                     }
+                    else -> {}
                 }
             }
         }
