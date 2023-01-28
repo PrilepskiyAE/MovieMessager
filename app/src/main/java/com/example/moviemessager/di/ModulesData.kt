@@ -3,7 +3,6 @@ package com.example.moviemessager.di
 import com.example.moviemessager.data.apiservise.MovieApiService
 import com.example.moviemessager.data.repository.MovieRepositoryImpl
 import com.example.moviemessager.data.utils.HeaderInterceptor
-import com.example.moviemessager.di.NetworkModule.provideRetrofitMovie
 import com.example.moviemessager.domain.interactor.GetListMovieUseCase
 import com.example.moviemessager.domain.repository.MovieRepository
 import com.example.moviemessager.domain.usecase.GetListMovieUseCaseImpl
@@ -64,3 +63,6 @@ class  MovieGetListMovieUseCaseModule {
     @Provides
     fun provideGetListMovieUseCaseModule(movieRepository: MovieRepository): GetListMovieUseCase=GetListMovieUseCaseImpl(movieRepository)
 }
+
+
+

@@ -17,8 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     override val binding: FragmentHomeBinding by viewBinding()
     override val viewModel: HomeViewModel by viewModels()
-    override fun onView() {
-
+    override fun onView() {// viewModel.test()
     }
 
 

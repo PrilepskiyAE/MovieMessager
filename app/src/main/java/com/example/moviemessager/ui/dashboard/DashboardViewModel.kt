@@ -8,7 +8,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.moviemessager.domain.interactor.GetListMovieUseCase
-import com.example.moviemessager.domain.model.MovieModel
+
+import com.example.moviemessager.domain.model.MovieUImodel
 import com.example.moviemessager.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +24,7 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
     private val _movieTotal: MutableStateFlow<Int> = MutableStateFlow(0)
     val movieTotal: StateFlow<Int> = _movieTotal.asStateFlow()
 
-    private val _movieList:  MutableStateFlow<PagingData<MovieModel>?> by lazy {
+    private val _movieList:  MutableStateFlow<PagingData<MovieUImodel>?> by lazy {
         MutableStateFlow(
             null
         )
