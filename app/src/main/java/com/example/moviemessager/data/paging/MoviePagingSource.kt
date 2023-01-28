@@ -13,14 +13,11 @@ import kotlinx.coroutines.coroutineScope
 
 class MoviePagingSource(apiQueries: List<Pair<String, Any>>, private val api: MovieApiService) :
     BaseNetworkPagingSource<MovieUImodel>(apiQueries) {
+    val movieList = mutableListOf<MovieUImodel>(
+        MovieUImodel.Title("Жанры"),MovieUImodel.Genre(GenresResponse.list_genres), MovieUImodel.Title("Фильмы")
+    )
     override suspend fun getDataFromSource(queryMap: Map<String, Any>): ActionResult<Pair<List<MovieUImodel>, Int>> {
-        val movieList = mutableListOf<MovieUImodel>()
-        val titleGeneral = MovieUImodel.Title("Жанры")
-        val generalList = MovieUImodel.Genre(GenresResponse.list_genres)
-        val titleMovie = MovieUImodel.Title("Фильмы")
-        movieList.add(titleGeneral)
-        movieList.add(generalList)
-        movieList.add(titleMovie)
+
         val apiData = makeApiCall {
 
             analyzeResponse(
@@ -30,10 +27,12 @@ class MoviePagingSource(apiQueries: List<Pair<String, Any>>, private val api: Mo
         }
         return when (apiData) {
             is ActionResult.Success -> {
+
                 apiData.data.results.onEach {
+
                     movieList.add(MovieUImodel.MovieModel.from(it))
                 }
-                ActionResult.Success(Pair(movieList, apiData.data.total_pages))
+                ActionResult.Success(Pair(movieList, apiData.data.page))
             }
             is ActionResult.Error -> {
                 ActionResult.Error(apiData.errors)
