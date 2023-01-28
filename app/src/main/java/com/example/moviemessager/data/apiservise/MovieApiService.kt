@@ -14,6 +14,11 @@ interface MovieApiService {
         @QueryMap queryMap: Map<String, @JvmSuppressWildcards Any>
     ): Response<MovieListResponse>
 
+    @GET("/3/discover/movie")
+    suspend fun getMovieListTestPsged(
+        @Query("api_key") api: String = "e74f8b81dfb31627c4e1f8eb055e8682",
+        @Query("page") page:String="1"
+    ): Response<MovieListResponse>
 
 
 }

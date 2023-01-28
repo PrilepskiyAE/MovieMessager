@@ -1,12 +1,15 @@
 package com.example.moviemessager.ui.home
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
+import com.example.moviemessager.core.data
 import com.example.moviemessager.domain.interactor.GetListMovieUseCase
 import com.example.moviemessager.domain.model.MovieModel
 import com.example.moviemessager.ui.base.BaseViewModel
@@ -19,3 +22,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel@Inject constructor():BaseViewModel()
+{
+
+}

@@ -3,31 +3,31 @@ package com.example.moviemessager.ui.pagingadapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
+
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import com.example.moviemessager.R
+
 
 import com.example.moviemessager.databinding.ItemMovieBinding
-import com.example.moviemessager.domain.model.MovieModel
+import com.example.moviemessager.domain.model.MovieUImodel
 import com.example.moviemessager.ui.base.BasePagingAdapter
 import com.example.moviemessager.ui.base.BaseViewHolder
 
 class MoviePagingAdapter(
-    private val onClickButtonClicked: (MovieModel)-> Unit):
-    BasePagingAdapter<ViewBinding, MovieModel, BaseViewHolder<MovieModel, ViewBinding>>()
+    private val onClickButtonClicked: (MovieUImodel.MovieModel)-> Unit):
+    BasePagingAdapter<ViewBinding, MovieUImodel, BaseViewHolder<MovieUImodel, ViewBinding>>()
 {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<MovieModel, ViewBinding> {
+    ): BaseViewHolder<MovieUImodel, ViewBinding> {
         return MovieViewHolder(ItemMovieBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     inner class MovieViewHolder(
         private val binding: ViewBinding
-    ) : BaseViewHolder<MovieModel, ViewBinding>(binding) {
-        override fun bind(item: MovieModel, context: Context) {
+    ) : BaseViewHolder<MovieUImodel.MovieModel, ViewBinding>(binding) {
+        override fun bind(item: MovieUImodel.MovieModel, context: Context) {
             with(binding) {
                 when (this) {
                     is ItemMovieBinding -> {
@@ -40,9 +40,36 @@ class MoviePagingAdapter(
                 }
             }
         }
-        override fun onItemClick(item: MovieModel) {
+        override fun onItemClick(item: MovieUImodel.MovieModel) {
             onItemClick(item)
             onClickButtonClicked(item)
         }
+
+
+
+    }
+
+
+
+    override fun getItemViewType(position: Int): Int {
+    val item = getItem(position)
+    return when (item) {
+        is MovieUImodel.MovieModel -> MovieClassType.MOVIE.ordinal
+
+
+        is MovieUImodel.Title -> MovieClassType.TITLE.ordinal
+
+        is MovieUImodel.Genre -> MovieClassType.GENERALS.ordinal
+
+        else -> {
+            MovieClassType.NULL.ordinal
+        }
+    }
+}
+    enum class MovieClassType {
+        MOVIE,
+        TITLE,
+        GENERALS,
+        NULL
     }
 }
