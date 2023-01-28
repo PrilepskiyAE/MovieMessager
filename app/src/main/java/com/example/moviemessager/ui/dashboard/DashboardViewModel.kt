@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.insertSeparators
 import androidx.paging.map
+import com.example.moviemessager.data.response.GenresResponse
 import com.example.moviemessager.domain.interactor.GetListMovieUseCase
 
 import com.example.moviemessager.domain.model.MovieUImodel
@@ -29,18 +31,24 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
             null
         )
     }
+
     var movieList = _movieList.asStateFlow()
 
 
     fun loadMovie() {
         viewModelScope.launch(Dispatchers.IO) {
+
             getListMovieUseCase()
+
                 .cachedIn(this)
+
                 .collectLatest { pagingData ->
                    _movieList.emit(pagingData.map { it.first })
                 }
         }
     }
+
+
 
 
 

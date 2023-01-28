@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 const val STARTING_PAGE = 1
-const val PAGE_SIZE = 736778
+const val PAGE_SIZE = 500
 abstract class BaseNetworkPagingSource<Item : DiffUtilModel<*>> (private val apiQueries: List<Pair<String, Any>>?): PagingSource<Int, Pair<Item, Int>>(){
 
 
@@ -42,7 +42,8 @@ abstract class BaseNetworkPagingSource<Item : DiffUtilModel<*>> (private val api
                     val nextKey = if (result.data!!.first.isEmpty()) {
                         null
                     } else {
-                      position+  (params.loadSize / PAGE_SIZE)
+
+                      position+ (params.loadSize / PAGE_SIZE)
                     }
 
                     val prevKey = if (position == STARTING_PAGE) null else position - 1
