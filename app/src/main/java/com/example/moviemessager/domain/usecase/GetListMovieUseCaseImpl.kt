@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetListMovieUseCaseImpl@Inject constructor(private val moveRepository: MovieRepository): GetListMovieUseCase {
-    override suspend fun invoke(queryOptions: List<Pair<String, Any>>): Flow<PagingData<Pair<MovieModel, Int>>> =
+    override suspend operator fun invoke(queryOptions: List<Pair<String, Any>>): Flow<PagingData<Pair<MovieModel, Int>>> =
         Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,

@@ -3,6 +3,7 @@ package com.example.moviemessager.ui.dashboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
@@ -22,47 +23,27 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
     private val _movieTotal: MutableStateFlow<Int> = MutableStateFlow(0)
     val movieTotal: StateFlow<Int> = _movieTotal.asStateFlow()
 
-    private val _movieList: MutableStateFlow<List<MovieModel>?> by lazy {
+    private val _movieList:  MutableStateFlow<PagingData<MovieModel>?> by lazy {
         MutableStateFlow(
             null
         )
     }
     var movieList = _movieList.asStateFlow()
-    data class ListsViewState(
-        val movieList: PagingData<MovieModel>? = null,
-        val isLoading: Boolean = true
-    )
-    private val _state = MutableStateFlow(ListsViewState())
-    val state: StateFlow<ListsViewState> = _state.asStateFlow()
-    private fun trigerLoading(value: ListsViewState) {
-        _state.value = value
-    }
-    fun getMovie() {
-        val queryOptions = mutableListOf<Pair<String, Any>>()
-        trigerLoading(
-            _state.value.copy(
-                isLoading = true
-            )
-        )
-        val movieListLocal = mutableListOf<MovieModel>()
-        CoroutineScope(Dispatchers.IO).launch{
-            _movieList.emit(null)
-            _movieTotal.emit(0)
-            getListMovieUseCase.invoke(queryOptions).mapLatest {
-                it.map {
-                    movieListLocal.add(it.first)
-                    _movieList.emit(movieListLocal)
-                    _movieTotal.emit(it.second)
-                    it.first
+
+
+    fun loadMovie() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getListMovieUseCase()
+                .cachedIn(this)
+                .collectLatest { pagingData ->
+                   _movieList.emit(pagingData.map { it.first })
                 }
-            }.cachedIn(this).collectLatest {
-                _state.value.copy(
-                    isLoading = false,
-                    movieList = it
-                )
-            }
         }
     }
+
+
+
+
     companion object{
         const val TAG ="HomeViewModel"
     }
