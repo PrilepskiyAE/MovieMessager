@@ -11,7 +11,7 @@ import androidx.paging.insertSeparators
 import androidx.paging.map
 import com.example.moviemessager.core.data
 import com.example.moviemessager.domain.interactor.GetListMovieUseCase
-import com.example.moviemessager.domain.model.MovieModel
+
 import com.example.moviemessager.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope

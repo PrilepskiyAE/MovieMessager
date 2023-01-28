@@ -26,46 +26,42 @@ class MoviePagingAdapter(
 
     inner class MovieViewHolder(
         private val binding: ViewBinding
-    ) : BaseViewHolder<MovieUImodel.MovieModel, ViewBinding>(binding) {
-        override fun bind(item: MovieUImodel.MovieModel, context: Context) {
+    ) : BaseViewHolder<MovieUImodel, ViewBinding>(binding) {
+        override fun bind(item: MovieUImodel, context: Context) {
             with(binding) {
                 when (this) {
                     is ItemMovieBinding -> {
+                        if (item is MovieUImodel.MovieModel){
                         filmName.text=item.title
                         Glide.with(itemView)
                             .load("https://image.tmdb.org/t/p/w500"+item.poster_path)
                             .into(filmCover)
-                    }
+                    }}
                     else -> {}
                 }
             }
         }
-        override fun onItemClick(item: MovieUImodel.MovieModel) {
-            onItemClick(item)
-            onClickButtonClicked(item)
-        }
-
 
 
     }
 
 
 
-    override fun getItemViewType(position: Int): Int {
-    val item = getItem(position)
-    return when (item) {
-        is MovieUImodel.MovieModel -> MovieClassType.MOVIE.ordinal
-
-
-        is MovieUImodel.Title -> MovieClassType.TITLE.ordinal
-
-        is MovieUImodel.Genre -> MovieClassType.GENERALS.ordinal
-
-        else -> {
-            MovieClassType.NULL.ordinal
-        }
-    }
-}
+//    override fun getItemViewType(position: Int): Int {
+//    val item = getItem(position)
+//    return when (item) {
+//        is MovieUImodel.MovieModel -> MovieClassType.MOVIE.ordinal
+//
+//
+//        is MovieUImodel.Title -> MovieClassType.TITLE.ordinal
+//
+//        is MovieUImodel.Genre -> MovieClassType.GENERALS.ordinal
+//
+//        else -> {
+//            MovieClassType.NULL.ordinal
+//        }
+//    }
+//}
     enum class MovieClassType {
         MOVIE,
         TITLE,
