@@ -1,4 +1,4 @@
-package com.example.moviemessager.ui.dashboard
+package com.example.moviemessager.ui.fragment.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,15 +36,17 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
 
 
     fun loadMovie() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
 
             getListMovieUseCase()
 
                 .cachedIn(this)
 
                 .collectLatest { pagingData ->
-                   _movieList.emit(pagingData.map { it.first })
+                  _movieList.emit(pagingData.map { it.first })
+                    _movieList.value=pagingData.map { it.first }
                 }
+            _movieList.value
         }
     }
 
