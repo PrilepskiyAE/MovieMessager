@@ -1,4 +1,4 @@
-package com.example.moviemessager.ui.home
+package com.example.moviemessager.ui.fragment.home
 
 
 import android.util.Log

@@ -1,4 +1,4 @@
-package com.example.moviemessager.ui.message
+package com.example.moviemessager.ui.fragment.message
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.databinding.FragmentMessageBinding
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
-import com.example.moviemessager.ui.home.HomeViewModel
+import com.example.moviemessager.ui.fragment.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 

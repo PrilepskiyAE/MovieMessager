@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 const val STARTING_PAGE = 1
-const val PAGE_SIZE = 500
+const val PAGE_SIZE = 36854
 abstract class BaseNetworkPagingSource<Item : DiffUtilModel<*>> (private val apiQueries: List<Pair<String, Any>>?): PagingSource<Int, Pair<Item, Int>>(){
 
 
@@ -43,7 +43,7 @@ abstract class BaseNetworkPagingSource<Item : DiffUtilModel<*>> (private val api
                         null
                     } else {
 
-                      position+ (params.loadSize / PAGE_SIZE)
+                      position+1 //(params.loadSize / PAGE_SIZE)
                     }
 
                     val prevKey = if (position == STARTING_PAGE) null else position - 1
@@ -63,7 +63,7 @@ abstract class BaseNetworkPagingSource<Item : DiffUtilModel<*>> (private val api
             LoadResult.Error(exception)
         }
     }
-    abstract suspend fun getDataFromSource(queryMap: Map<String, Any>): ActionResult<Pair<List<Item>, Int>>
+    abstract suspend fun getDataFromSource(queryMap: Map<String, Any>): ActionResult<Pair<Set<Item>, Int>>
     fun MutableMap<String,Any>.addQueryPair(queryParams: List<Pair<String,Any>>): Map<String,Any> {
 
         queryParams.onEach {
