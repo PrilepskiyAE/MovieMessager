@@ -1,4 +1,4 @@
-package com.example.moviemessager.ui.profile
+package com.example.moviemessager.ui.fragment.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

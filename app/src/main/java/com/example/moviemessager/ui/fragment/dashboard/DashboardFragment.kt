@@ -1,4 +1,4 @@
-package com.example.moviemessager.ui.dashboard
+package com.example.moviemessager.ui.fragment.dashboard
 
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +20,7 @@ import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.domain.model.MovieUImodel
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
-import com.example.moviemessager.ui.home.HomeViewModel
+import com.example.moviemessager.ui.fragment.home.HomeViewModel
 import com.example.moviemessager.ui.pagingadapter.MoviePagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
