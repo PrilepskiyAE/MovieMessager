@@ -1,4 +1,4 @@
-package com.example.moviemessager.ui.fragment.dashboard
+package com.example.moviemessager.ui.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,9 +23,10 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel@Inject constructor(private val getListMovieUseCase: GetListMovieUseCase) : BaseViewModel() {
 
-    private val _movieTotal: MutableStateFlow<Int> = MutableStateFlow(0)
-    val movieTotal: StateFlow<Int> = _movieTotal.asStateFlow()
-
+    data class ListsViewState(
+        val bookList:Flow<PagingData<MovieUImodel>>?=null,
+        val bannerList: List<Int>?=null
+    )
     private val _movieList:  MutableStateFlow<PagingData<MovieUImodel>?> by lazy {
         MutableStateFlow(
             null
@@ -36,17 +37,15 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
 
 
     fun loadMovie() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
 
             getListMovieUseCase()
 
                 .cachedIn(this)
 
                 .collectLatest { pagingData ->
-                  _movieList.emit(pagingData.map { it.first })
-                    _movieList.value=pagingData.map { it.first }
+                   _movieList.value=pagingData
                 }
-            _movieList.value
         }
     }
 

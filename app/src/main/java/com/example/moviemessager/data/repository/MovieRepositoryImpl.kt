@@ -1,5 +1,8 @@
 package com.example.moviemessager.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.example.moviemessager.core.ActionResult
 import com.example.moviemessager.data.apiservise.MovieApiService
@@ -12,12 +15,17 @@ import com.example.moviemessager.domain.model.MovieUImodel
 
 import com.example.moviemessager.domain.repository.MovieRepository
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl@Inject constructor(private val api: MovieApiService): MovieRepository {
-    override  fun getListMovie( queryOptions: List<Pair<String, Any>>): PagingSource<Int, Pair<MovieUImodel, Int>> = MoviePagingSource(
-        queryOptions,api
-    )
+    override fun getListMovie(): Flow<PagingData<MovieUImodel>> {
+        return Pager(config = PagingConfig(
+            pageSize = 32,
+        ), pagingSourceFactory ={ MoviePagingSource(api)} ).flow
+    }
+
+
 
 //    override suspend fun getListMoviePages(): List<MovieModel> {
 //        val result: MutableList<MovieModel> = mutableListOf()
