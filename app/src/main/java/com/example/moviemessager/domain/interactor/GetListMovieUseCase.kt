@@ -5,5 +5,5 @@ import com.example.moviemessager.domain.model.MovieUImodel
 import kotlinx.coroutines.flow.Flow
 
 interface GetListMovieUseCase {
-    suspend operator fun invoke(queryOptions: List<Pair<String, Any>> = emptyList()): Flow<PagingData<Pair<MovieUImodel, Int>>>
+  operator fun invoke(): Flow<PagingData<MovieUImodel>>
 }
