@@ -16,29 +16,28 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
-class MoviePagingSource( private val api: MovieApiService) :
+class MoviePagingSource(private val api: MovieApiService, private val genres: Int) :
     PagingSource<Int, MovieUImodel>() {
 
 
-
-
-
-    suspend fun getDataFromSource(page:Int): ActionResult<List<MovieUImodel>> {
-
+    suspend fun getDataFromSource(page: Int): ActionResult<List<MovieUImodel>> {
 
 
         val apiData = makeApiCall {
 
             analyzeResponse(
-
-                api.getMovieList(page = page)
+                if (genres == 0) {
+                    api.getMovieList(page = page, genres = "")
+                } else {
+                    api.getMovieList(page = page, genres = genres.toString())
+                }
             )
         }
 
         val movieList = mutableListOf<MovieUImodel>(
             //MovieUImodel.Title("Жанры"),MovieUImodel.Genre(GenresResponse.list_genres), MovieUImodel.Title("Фильмы")
         )
-        if (page==1){
+        if (page == 1) {
             movieList.add(MovieUImodel.Title("Жанры"))
             movieList.add(MovieUImodel.Genre(GenresResponse.list_genres))
             movieList.add(MovieUImodel.Title("Фильмы"))
@@ -70,14 +69,15 @@ class MoviePagingSource( private val api: MovieApiService) :
         return try {
             withContext(Dispatchers.IO) {
                 val page = params.key ?: 1
-                val result=getDataFromSource(page)
+                val result = getDataFromSource(page)
                 if (result.succeeded) {
 
-                    LoadResult.Page(data = result.data!!,
+                    LoadResult.Page(
+                        data = result.data!!,
                         prevKey = if (page == 1) null else page.minus(1),
                         nextKey = if (result.data.isNullOrEmpty()) null else page.plus(1)
                     )
-                }else{
+                } else {
                     LoadResult.Error((result as ActionResult.Error).errors)
                 }
 

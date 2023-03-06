@@ -19,10 +19,10 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl@Inject constructor(private val api: MovieApiService): MovieRepository {
-    override fun getListMovie(): Flow<PagingData<MovieUImodel>> {
+    override fun getListMovie(genres:Int): Flow<PagingData<MovieUImodel>> {
         return Pager(config = PagingConfig(
             pageSize = 32,
-        ), pagingSourceFactory ={ MoviePagingSource(api)} ).flow
+        ), pagingSourceFactory ={ MoviePagingSource(api,genres)} ).flow
     }
 
 

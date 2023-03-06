@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
 
-    fun getListMovie(): Flow<PagingData<MovieUImodel>>
+    fun getListMovie(genres:Int): Flow<PagingData<MovieUImodel>>
 }

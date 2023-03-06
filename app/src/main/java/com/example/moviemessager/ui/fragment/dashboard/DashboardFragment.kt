@@ -20,6 +20,7 @@ import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.domain.model.MovieUImodel
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
+import com.example.moviemessager.ui.dashboard.DashboardViewModel
 import com.example.moviemessager.ui.fragment.home.HomeViewModel
 import com.example.moviemessager.ui.pagingadapter.MoviePagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,10 +29,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>() {
     override val binding: FragmentDashboardBinding by viewBinding()
     override val viewModel: DashboardViewModel by viewModels()
-    private val movieAdapter=MoviePagingAdapter({})
+    private val movieAdapter=MoviePagingAdapter({},{
+        viewModel.loadMovie(it)
+    })
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.loadMovie()
+        viewModel.loadMovie(0)
     }
 
     override fun onEach() {

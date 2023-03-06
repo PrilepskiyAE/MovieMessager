@@ -36,10 +36,10 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
     var movieList = _movieList.asStateFlow()
 
 
-    fun loadMovie() {
+    fun loadMovie(genres:Int) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            getListMovieUseCase()
+            getListMovieUseCase(genres = genres)
 
                 .cachedIn(this)
 

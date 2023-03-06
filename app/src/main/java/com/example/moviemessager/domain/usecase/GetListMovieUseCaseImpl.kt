@@ -9,6 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetListMovieUseCaseImpl@Inject constructor(private val moveRepository: MovieRepository): GetListMovieUseCase {
-    override operator fun invoke(): Flow<PagingData<MovieUImodel>> =
-         moveRepository.getListMovie()
+    override operator fun invoke(genres:Int): Flow<PagingData<MovieUImodel>> =
+         moveRepository.getListMovie(genres)
 }

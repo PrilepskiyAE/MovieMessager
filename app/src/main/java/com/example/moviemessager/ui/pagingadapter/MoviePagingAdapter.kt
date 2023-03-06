@@ -20,7 +20,9 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
 class MoviePagingAdapter(
-    private val onClickButtonClicked: (MovieUImodel.MovieModel)-> Unit):
+    private val onClickButtonClicked: (MovieUImodel.MovieModel)-> Unit,
+    private val onClickGenresClicked: (code:Int)-> Unit
+):
     BasePagingAdapter<ViewBinding, MovieUImodel, BaseViewHolder<MovieUImodel, ViewBinding>>()
 {
     override fun onCreateViewHolder(
@@ -81,7 +83,11 @@ class MoviePagingAdapter(
                                     chip.setOnCheckedChangeListener{
                                             _,isChecked ->
                                         if (isChecked) {
-                                            Log.d("type999",chip.text.toString())
+                                          val key= item.list_genres.get(chip.text.toString())
+
+                                            Log.d("type999", " ${chip.text} <--->  ${key}" )
+                                            onClickGenresClicked(key?:0)
+                                            chip.isChecked=false
                                         } else{
                                             Log.d("type999","genrse")
                                         }
@@ -96,7 +102,7 @@ class MoviePagingAdapter(
             }
         }
         override fun onItemClick(item: MovieUImodel) {
-            onItemClick(item)
+          //  onItemClick(item)
 
         }
 
