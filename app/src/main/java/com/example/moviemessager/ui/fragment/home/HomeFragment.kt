@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +20,7 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     override val binding: FragmentHomeBinding by viewBinding()
     override val viewModel: HomeViewModel by viewModels()
     override fun onView() {// viewModel.test()
+
     }
 
 
