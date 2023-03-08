@@ -26,6 +26,11 @@
         android:name="com.example.moviemessager.ui.fragment.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.moviemessager.ui.fragment.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 
 
 </navigation>

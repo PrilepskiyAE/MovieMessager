@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "213769316395-fv809efg02p85noo7lj2diphb142p86h.apps.googleusercontent.com",
+          "client_id": "213769316395-g9mrpcm80c5pj7bl3tmjs8npshs0gbs1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moviemessager",
+            "certificate_hash": "3d6f2d926657abb0fe0360a3ce955b96a0aa0bc7"
+          }
+        },
+        {
+          "client_id": "213769316395-rjirc2dgogim98e0hcgchigqsombfvis.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
