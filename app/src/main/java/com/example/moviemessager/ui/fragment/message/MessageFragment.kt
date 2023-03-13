@@ -13,6 +13,7 @@ import com.example.moviemessager.databinding.FragmentMessageBinding
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
 import com.example.moviemessager.ui.fragment.home.HomeViewModel
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -33,9 +34,7 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
         onChangeListener(myRef)
     }
     override fun onView() {
-        viewModel.text.observe(viewLifecycleOwner) {
-            binding.textMessage.text = it
-        }
+
 
         binding.btSend.setOnClickListener {
             myRef.setValue(binding.etMessage.text.toString())
@@ -44,11 +43,16 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
 
     }
 private fun onChangeListener(dRef:DatabaseReference){
+    auth= Firebase.auth
+    if (auth.currentUser==null){
+        Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
+        navigateFragment(R.id.loginFragment)
+    }else{
     dRef.addValueEventListener(object :ValueEventListener{
         override fun onDataChange(snapshot: DataSnapshot) {
           binding.apply {
               rcViewTest.append("\n")
-              rcViewTest.append("Alexey: ${snapshot.value.toString()}")
+              rcViewTest.append("${auth.currentUser?.email?.toString()}: ${snapshot.value.toString()}")
           }
         }
 
@@ -57,5 +61,6 @@ private fun onChangeListener(dRef:DatabaseReference){
         }
 
     })
+}
 }
 }

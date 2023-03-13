@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,7 @@ import com.example.moviemessager.ui.dashboard.DashboardViewModel
 import com.example.moviemessager.ui.fragment.home.HomeViewModel
 import com.example.moviemessager.ui.pagingadapter.MoviePagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>() {
@@ -35,6 +37,7 @@ class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.loadMovie(0)
+
     }
 
     override fun onEach() {
@@ -56,17 +59,22 @@ class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboa
                     }
 
             }
-            lifecycleScope.launchWhenStarted {
+            lifecycleScope.launch {
                 if (it != null) {
 
                     movieAdapter.submitData(it)
 
-                }
+                }else{
+                    Toast.makeText(requireContext(), "connect server error", Toast.LENGTH_LONG).show()}
             }
 
 
 
             }
+
+        if(viewModel.movieList.value==null){
+            Toast.makeText(requireContext(), "connect server error", Toast.LENGTH_LONG).show()
+        }
         }
     }
 

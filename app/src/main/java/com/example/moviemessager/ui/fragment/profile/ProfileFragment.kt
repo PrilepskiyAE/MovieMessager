@@ -14,8 +14,12 @@ class ProfileFragment : FragmentBaseNCMVVM<ProfileViewModel, FragmentProfileBind
     override val binding: FragmentProfileBinding by viewBinding()
     override val viewModel: ProfileViewModel by viewModels()
     override fun onView() {
-        viewModel.text.observe(viewLifecycleOwner) {
-            binding.textProfile.text = it
+        isAuth()
+    }
+    override fun onViewClick() {
+        binding.btLogOut.setOnClickListener {
+            auth.signOut()
+            isAuth()
         }
     }
 }
