@@ -37,6 +37,7 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth= Firebase.auth
+
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val task=GoogleSignIn.getSignedInAccountFromIntent(it.data)
             try {
@@ -57,6 +58,12 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
     override fun onViewClick() {
         binding.btLoginGoogle.setOnClickListener {
             signInWithGoogle()
+        }
+        binding.btLogin.setOnClickListener {
+            login()
+        }
+        binding.btReg.setOnClickListener {
+            register()
         }
     }
 
@@ -85,5 +92,35 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
                 binding.HintError.text="firebaseAuthWithGoogle: nok"
             }
         }
+    }
+
+
+    fun register(){
+        auth=FirebaseAuth.getInstance()
+        val email=binding.etLogin.text.toString()
+        val password=binding.etPass.text.toString()
+        auth.createUserWithEmailAndPassword(email,password)
+            .addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                binding.HintError.text="firebaseAuthWithGoogle: ok"
+                popBackStack()
+            }
+        }
+            .addOnFailureListener{
+            binding.HintError.text="firebaseAuthWithGoogle: nok"
+        }
+    }
+    fun login(){
+        auth=FirebaseAuth.getInstance()
+        val email=binding.etLogin.text.toString()
+        val password=binding.etPass.text.toString()
+        auth.signInWithEmailAndPassword(email,password)
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful){
+                    binding.HintError.text="firebaseAuthWithEmail: ok"
+                    popBackStack()
+                }
+            }
+            .addOnFailureListener{ binding.HintError.text="firebaseAuthWithEmail: nok"}
     }
 }
