@@ -31,6 +31,7 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
     private val database:FirebaseDatabase =Firebase.database
     private val myRef = database.getReference("message")
     private val myRef2 = database.getReference("users")
+    private var users:MutableList<UserModel> = mutableListOf()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,8 +56,11 @@ private fun onChangeListener(dRef:DatabaseReference){
     }else{
     dRef.addValueEventListener(object :ValueEventListener{
         override fun onDataChange(snapshot: DataSnapshot) {
-
-            Log.d("TAG", "onDataChange: ${snapshot.children}")
+            snapshot.children.forEach {
+                users.add(UserModel( it.child("username").value.toString(),it.child("email").value.toString()))
+            }
+            Log.d("TAG", "onChangeListener: $users")
+            Log.d("TAG", "Controlsum: ${snapshot.value.toString()}")
 //          binding.apply {
 //              rcViewTest.append("\n")
 //              rcViewTest.append("${auth.currentUser?.email?.toString()}: ${snapshot.value.toString()}")
