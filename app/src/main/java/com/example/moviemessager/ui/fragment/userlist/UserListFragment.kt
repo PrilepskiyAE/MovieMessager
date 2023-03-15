@@ -2,21 +2,16 @@ package com.example.moviemessager.ui.fragment.userlist
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviemessager.R
-import com.example.moviemessager.databinding.FragmentProfileBinding
 import com.example.moviemessager.databinding.FragmentUserListBinding
 import com.example.moviemessager.domain.model.UserModel
 import com.example.moviemessager.ui.adapter.UsersAdapter
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
-import com.example.moviemessager.ui.fragment.profile.ProfileViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -30,9 +25,9 @@ class UserListFragment : FragmentBaseNCMVVM<UserListViewModel, FragmentUserListB
     private val database: FirebaseDatabase = Firebase.database
     private val myRef = database.getReference("users")
     private var users:MutableList<UserModel> = mutableListOf()
-    private val userAdapter=UsersAdapter({
-
-    })
+    private val userAdapter=UsersAdapter {
+        navigateFragment(UserListFragmentDirections.actionUserListFragmentToNavigationMessage(it))
+    }
 
     private fun setAdapter() {
         binding.rvItemsList.apply {
