@@ -26,10 +26,12 @@ class UsersAdapter(private val click: (UserModel) -> Unit): BaseAdapter<ViewBind
     ) : BaseViewHolder<UserModel, ViewBinding>(binding){
         override fun bind(item: UserModel, context: Context) {
            binding.userName.text=item.email?:item.username
-            binding.cardView.setOnClickListener {
-                click(item)
-            }
+
         }
 
+        override fun onItemClick(item: UserModel) {
+            super.onItemClick(item)
+            click(item)
+        }
     }
 }

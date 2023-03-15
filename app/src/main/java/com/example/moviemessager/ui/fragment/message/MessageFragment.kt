@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.moviemessager.R
 import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.databinding.FragmentMessageBinding
@@ -32,6 +33,7 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
     private val myRef = database.getReference("message")
     private val myRef2 = database.getReference("users")
     private var users:MutableList<UserModel> = mutableListOf()
+    val args:MessageFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,8 +41,8 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
         onChangeListener(myRef2)
     }
     override fun onView() {
-
-
+        val args3=args.user
+        Log.d("TAG99", "onView: $args3 ")
         binding.btSend.setOnClickListener {
             myRef.child(myRef.push().key?:"omnonom").setValue(MessageUser(UserModel(auth.currentUser?.displayName?:"noname",auth.currentUser?.email?:"noEmail"),UserModel("frend","frend@test.com"),binding.etMessage.text.toString()))
         }

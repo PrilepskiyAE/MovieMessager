@@ -20,7 +20,12 @@
         android:id="@+id/navigation_message"
         android:name="com.example.moviemessager.ui.fragment.message.MessageFragment"
         android:label="@string/title_message"
-        tools:layout="@layout/fragment_message" />
+        tools:layout="@layout/fragment_message" >
+        <argument
+            android:name="user"
+            app:argType="com.example.moviemessager.domain.model.UserModel" />
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.moviemessager.ui.fragment.profile.ProfileFragment"
@@ -35,7 +40,12 @@
         android:id="@+id/userListFragment"
         android:name="com.example.moviemessager.ui.fragment.userlist.UserListFragment"
         android:label="fragment_user_list"
-        tools:layout="@layout/fragment_user_list" />
+        tools:layout="@layout/fragment_user_list" >
+        <action
+            android:id="@+id/action_userListFragment_to_navigation_message"
+            app:destination="@id/navigation_message" />
+    </fragment>
+
 
 
 </navigation>
