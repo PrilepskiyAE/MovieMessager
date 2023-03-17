@@ -1,9 +1,15 @@
 package com.example.moviemessager.di
 
 import com.example.moviemessager.data.apiservise.MovieApiService
+import com.example.moviemessager.data.repository.AuthenticationRepositoryImpl
+import com.example.moviemessager.data.repository.CommentsRepositoryImpl
+import com.example.moviemessager.data.repository.MessageRepositoryImpl
 import com.example.moviemessager.data.repository.MovieRepositoryImpl
 import com.example.moviemessager.data.utils.HeaderInterceptor
 import com.example.moviemessager.domain.interactor.GetListMovieUseCase
+import com.example.moviemessager.domain.repository.AuthenticationRepository
+import com.example.moviemessager.domain.repository.CommentsRepository
+import com.example.moviemessager.domain.repository.MessageRepository
 import com.example.moviemessager.domain.repository.MovieRepository
 import com.example.moviemessager.domain.usecase.GetListMovieUseCaseImpl
 import dagger.Module
@@ -56,6 +62,19 @@ class MovieapiModule(){
 class  MovieRepositoryModule {
     @Provides
     fun provideRepositoryModule(api:MovieApiService): MovieRepository = MovieRepositoryImpl(api)
+
+    @Provides
+    fun provideAuthenticationRepositoryModule(): AuthenticationRepository = AuthenticationRepositoryImpl()
+
+    @Provides
+    fun provideCommentsRepositoryModule(): CommentsRepository = CommentsRepositoryImpl()
+
+    @Provides
+    fun provideMessageRepositoryModule(): MessageRepository = MessageRepositoryImpl()
+
+
+
+
 }
 @Module
 @InstallIn(ViewModelComponent::class)
