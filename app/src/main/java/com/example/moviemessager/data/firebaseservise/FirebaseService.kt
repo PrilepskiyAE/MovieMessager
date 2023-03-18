@@ -15,4 +15,6 @@ object FirebaseService {
         return database.getReference(path)
     }
     fun isAuth():Boolean = auth.currentUser == null
+
+    fun getFirebaseAuth():FirebaseAuth= auth
 }
