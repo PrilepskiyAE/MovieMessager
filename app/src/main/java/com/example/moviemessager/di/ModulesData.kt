@@ -6,12 +6,12 @@ import com.example.moviemessager.data.repository.CommentsRepositoryImpl
 import com.example.moviemessager.data.repository.MessageRepositoryImpl
 import com.example.moviemessager.data.repository.MovieRepositoryImpl
 import com.example.moviemessager.data.utils.HeaderInterceptor
-import com.example.moviemessager.domain.interactor.GetListMovieUseCase
+import com.example.moviemessager.domain.interactor.*
 import com.example.moviemessager.domain.repository.AuthenticationRepository
 import com.example.moviemessager.domain.repository.CommentsRepository
 import com.example.moviemessager.domain.repository.MessageRepository
 import com.example.moviemessager.domain.repository.MovieRepository
-import com.example.moviemessager.domain.usecase.GetListMovieUseCaseImpl
+import com.example.moviemessager.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -78,9 +78,35 @@ class  MovieRepositoryModule {
 }
 @Module
 @InstallIn(ViewModelComponent::class)
-class  MovieGetListMovieUseCaseModule {
+class UseCaseModule {
     @Provides
     fun provideGetListMovieUseCaseModule(movieRepository: MovieRepository): GetListMovieUseCase=GetListMovieUseCaseImpl(movieRepository)
+
+    @Provides
+    fun provideCheckIsLoginUseCaseModule(authenticationRepository: AuthenticationRepository): CheckIsLoginUseCase =
+        CheckIsLoginUseCaseImpl(authenticationRepository)
+
+
+    @Provides
+    fun provideFirebaseAuthWithGoogleUseCaseModule(authenticationRepository: AuthenticationRepository): FirebaseAuthWithGoogleUseCase =
+        FirebaseAuthWithGoogleUseCaseImpl(authenticationRepository)
+
+    @Provides
+    fun provideLoginBasicAuthUseCaseModule(authenticationRepository: AuthenticationRepository): LoginBasicAuthUseCase =
+        LoginBasicAuthUseCaseImpl(authenticationRepository)
+
+    @Provides
+    fun provideLogoutUseCaseModule(authenticationRepository: AuthenticationRepository): LogoutUseCase =
+        LogoutUseCaseImpl(authenticationRepository)
+
+    @Provides
+    fun provideRegisterBasicAuthUseCaseModule(authenticationRepository: AuthenticationRepository): RegisterBasicAuthUseCase =
+        RegisterBasicAuthUseCaseImpl(authenticationRepository)
+
+    @Provides
+    fun provideSignInWithGoogleUseCaseModule(authenticationRepository: AuthenticationRepository): SignInWithGoogleUseCase =
+        SignInWithGoogleUseCaseImpl(authenticationRepository)
+
 }
 
 
