@@ -3,10 +3,7 @@ package com.example.moviemessager.ui.fragment.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -23,11 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,9 +29,6 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
     override val viewModel: LoginViewModel by viewModels()
     override val binding: FragmentLoginBinding by viewBinding()
     lateinit var launcher: ActivityResultLauncher<Intent>
-    private val database: FirebaseDatabase =Firebase.database
-    private val myRef = database.getReference("users")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth= Firebase.auth
@@ -48,7 +38,13 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
             try {
                 val account=task.getResult(ApiException::class.java)
                 if (account!=null){
-                    firebaseAuthWithGoogle(account.idToken!!)
+                   // firebaseAuthWithGoogle(account.idToken!!)
+                    viewModel.firebaseAuthWithGoogle(account.idToken!!,{
+                        binding.HintError.text="firebaseAuthWithEmail: ok"
+                        popBackStack()
+                    },{
+                        binding.HintError.text="firebaseAuthWithGoogle: nok"
+                    })
                 }
             } catch (e:ApiException){
                 binding.HintError.text=e.message
@@ -59,19 +55,27 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
     override fun onView() {
 
     }
-
     override fun onViewClick() {
         binding.btLoginGoogle.setOnClickListener {
-            signInWithGoogle()
+            viewModel.signInWithGoogle(launcher,getClient())
         }
         binding.btLogin.setOnClickListener {
-            login()
+           viewModel.loginBasicAuth(binding.etLogin.text.toString(),binding.etPass.text.toString(),{
+               binding.HintError.text="firebaseAuthWithEmail: ok"
+               popBackStack()
+           },{
+               binding.HintError.text="firebaseAuthWithGoogle: nok"
+           })
         }
         binding.btReg.setOnClickListener {
-            register()
+           viewModel.registerBasicAuth(binding.etLogin.text.toString(),binding.etPass.text.toString(),{
+               binding.HintError.text="firebaseAuthWithEmail: ok"
+               popBackStack()
+           },{
+               binding.HintError.text="firebaseAuthWithGoogle: nok"
+           })
         }
     }
-
     private fun getClient(): GoogleSignInClient {
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -81,56 +85,5 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
 
         return GoogleSignIn.getClient(requireActivity(), gso)
     }
-
-    private fun signInWithGoogle() {
-        val signInClient = getClient()
-        launcher.launch(signInClient.signInIntent)
-    }
-    private fun firebaseAuthWithGoogle(idToken:String){
-        val credation=GoogleAuthProvider.getCredential(idToken,null)
-        auth.signInWithCredential(credation).addOnCompleteListener {
-            if (it.isSuccessful){
-                Log.d("TAG", "firebaseAuthWithGoogle: ok1")
-               // binding.HintError.text="firebaseAuthWithGoogle: ok"
-                myRef.child(auth.currentUser?.uid?:"omnomnom").setValue(UserModelFirebase(auth.currentUser?.displayName?:"noname",auth.currentUser?.email?:"noEmail")?:"ololololo")
-                popBackStack()
-            }else {
-                binding.HintError.text="firebaseAuthWithGoogle: nok"
-            }
-        }
-    }
-
-
-    fun register(){
-        auth=FirebaseAuth.getInstance()
-        val email=binding.etLogin.text.toString()
-        val password=binding.etPass.text.toString()
-        auth.createUserWithEmailAndPassword(email,password)
-            .addOnCompleteListener{ task ->
-            if(task.isSuccessful){
-                binding.HintError.text="firebaseAuthWithGoogle: ok"
-                myRef.child(auth.currentUser?.uid?:"omnomnom").setValue(UserModelFirebase(auth.currentUser?.displayName?:"noname",auth.currentUser?.email?:"noEmail")?:"ololololo")
-                popBackStack()
-            }
-        }
-            .addOnFailureListener{
-            binding.HintError.text="firebaseAuthWithGoogle: nok"
-        }
-    }
-    fun login(){
-        auth=FirebaseAuth.getInstance()
-        val email=binding.etLogin.text.toString()
-        val password=binding.etPass.text.toString()
-        auth.signInWithEmailAndPassword(email,password)
-            .addOnCompleteListener { task ->
-                if(task.isSuccessful){
-                    binding.HintError.text="firebaseAuthWithEmail: ok"
-                    myRef.child(auth.currentUser?.uid?:"omnomnom").setValue(UserModelFirebase(auth.currentUser?.displayName?:"noname",auth.currentUser?.email?:"noEmail")?:"ololololo")
-                    popBackStack()
-                }
-            }
-            .addOnFailureListener{ binding.HintError.text="firebaseAuthWithEmail: nok"}
-    }
-
 
 }
