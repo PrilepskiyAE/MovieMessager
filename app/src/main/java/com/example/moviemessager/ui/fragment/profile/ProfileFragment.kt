@@ -1,6 +1,7 @@
 package com.example.moviemessager.ui.fragment.profile
 
 import androidx.fragment.app.viewModels
+import com.example.moviemessager.R
 import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.databinding.FragmentProfileBinding
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
@@ -14,12 +15,16 @@ class ProfileFragment : FragmentBaseNCMVVM<ProfileViewModel, FragmentProfileBind
     override val binding: FragmentProfileBinding by viewBinding()
     override val viewModel: ProfileViewModel by viewModels()
     override fun onView() {
-        isAuth()
+        viewModel.isAuth {
+            navigateFragment(R.id.loginFragment)
+        }
     }
     override fun onViewClick() {
         binding.btLogOut.setOnClickListener {
-            auth.signOut()
-            isAuth()
+          viewModel.logout {
+              navigateFragment(R.id.loginFragment)
+          }
+
         }
     }
 }

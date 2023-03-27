@@ -24,7 +24,9 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     override val viewModel: HomeViewModel by viewModels()
 
     override fun onView() {// viewModel.test()
-    isAuth()
+        viewModel.isAuth {
+            navigateFragment(R.id.loginFragment)
+        }
 
     }
 

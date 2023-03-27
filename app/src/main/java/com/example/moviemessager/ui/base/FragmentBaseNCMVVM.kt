@@ -23,12 +23,12 @@ abstract class FragmentBaseNCMVVM<ViewModel : BaseViewModel, ViewBind : ViewBind
 
     }
 
-protected fun isAuth(){
-    auth= Firebase.auth
-    if (auth.currentUser==null){
-        navigateFragment(R.id.loginFragment)
-    }
-}
+//protected fun isAuth(){
+//    auth= Firebase.auth
+//    if (auth.currentUser==null){
+//        navigateFragment(R.id.loginFragment)
+//    }
+//}
 
 
     protected fun popBackStack() {
