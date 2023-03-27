@@ -37,7 +37,9 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
     val args: MessageFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        isAuth()
+        viewModel.isAuth {
+            navigateFragment(R.id.loginFragment)
+        }
         myRef =
             database.getReference("FROM_${auth.currentUser?.displayName ?: "Anonimus"}_TO_${args.user.username} ")
 

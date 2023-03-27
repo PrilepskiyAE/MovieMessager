@@ -10,6 +10,7 @@ import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
 import com.example.moviemessager.core.data
+import com.example.moviemessager.domain.interactor.CheckIsLoginUseCase
 import com.example.moviemessager.domain.interactor.GetListMovieUseCase
 
 import com.example.moviemessager.ui.base.BaseViewModel
@@ -21,7 +22,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel@Inject constructor():BaseViewModel()
+class HomeViewModel@Inject constructor(private val isLogin: CheckIsLoginUseCase):BaseViewModel()
 {
+    fun isAuth(action: () -> Unit) {
+        viewModelScope.launch{
+            if (isLogin()){
+                action()
+            }
+        }
 
+    }
 }
