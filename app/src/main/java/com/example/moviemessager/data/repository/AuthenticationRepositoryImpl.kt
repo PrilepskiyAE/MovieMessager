@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher
 import com.example.moviemessager.R
 import com.example.moviemessager.core.ActionResult
 import com.example.moviemessager.data.firebaseservise.FirebaseService
+import com.example.moviemessager.domain.model.UserModel
 import com.example.moviemessager.domain.model.UserModelFirebase
 import com.example.moviemessager.domain.repository.AuthenticationRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -13,6 +14,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor() : AuthenticationRepository {
@@ -69,5 +73,29 @@ class AuthenticationRepositoryImpl @Inject constructor() : AuthenticationReposit
     }
     override suspend fun isLogin():Boolean {
         return FirebaseService.isAuth()
+    }
+
+    override suspend fun initListUsersFirebase(success: (users:List<UserModel>) -> Unit, error: (error:String) -> Unit, noUser: () -> Unit) {
+        val users:MutableList<UserModel> = mutableListOf()
+
+        if (FirebaseService.getFirebaseAuth().currentUser==null){
+            noUser()
+        }else{
+            FirebaseService.getReference("users").addValueEventListener(object :
+                ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        users.add(UserModel( it.child("username").value.toString(),it.child("email").value.toString()))
+                    }
+                    success(users)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    error(error.message)
+                }
+
+            })
+        }
+
     }
 }

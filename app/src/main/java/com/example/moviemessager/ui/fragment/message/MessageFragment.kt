@@ -33,62 +33,62 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
     override val viewModel: MessageViewModel by viewModels()
     private val database: FirebaseDatabase = Firebase.database
     lateinit var myRef: DatabaseReference
-
-    val args: MessageFragmentArgs by navArgs()
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.isAuth {
-            navigateFragment(R.id.loginFragment)
-        }
-        myRef =
-            database.getReference("FROM_${auth.currentUser?.displayName ?: "Anonimus"}_TO_${args.user.username} ")
-
-        onChangeListener(myRef)
-    }
-
-    override fun onView() {
-        binding.btSend.setOnClickListener {
-            myRef.child(myRef.push().key ?: "omnonom").setValue(
-                MessageUserFirebase(
-                    UserModelFirebase(
-                        auth.currentUser?.displayName ?: "noname",
-                        auth.currentUser?.email ?: "noEmail"
-                    ),
-                    UserModelFirebase(args.user.username, args.user.email),
-                    binding.etMessage.text.toString()
-                )
-            )
-        }
-
-
-    }
-
-    private fun onChangeListener(dRef: DatabaseReference) {
-        auth = Firebase.auth
-
-        if (auth.currentUser == null) {
-            Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
-            navigateFragment(R.id.loginFragment)
-        } else {
-            dRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEach {
-
-                    }
-
-                    Log.d("TAG", "Controlsum: ${snapshot.value.toString()}")
-//          binding.apply {
-//              rcViewTest.append("\n")
-//              rcViewTest.append("${auth.currentUser?.email?.toString()}: ${snapshot.value.toString()}")
-//          }
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-                }
-
-            })
-        }
-    }
+//
+//    val args: MessageFragmentArgs by navArgs()
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        viewModel.isAuth {
+//            navigateFragment(R.id.loginFragment)
+//        }
+//        myRef =
+//            database.getReference("FROM_${auth.currentUser?.displayName ?: "Anonimus"}_TO_${args.user.username} ")
+//
+//        onChangeListener(myRef)
+//    }
+//
+//    override fun onView() {
+//        binding.btSend.setOnClickListener {
+//            myRef.child(myRef.push().key ?: "omnonom").setValue(
+//                MessageUserFirebase(
+//                    UserModelFirebase(
+//                        auth.currentUser?.displayName ?: "noname",
+//                        auth.currentUser?.email ?: "noEmail"
+//                    ),
+//                    UserModelFirebase(args.user.username, args.user.email),
+//                    binding.etMessage.text.toString()
+//                )
+//            )
+//        }
+//
+//
+//    }
+//
+//    private fun onChangeListener(dRef: DatabaseReference) {
+//        auth = Firebase.auth
+//
+//        if (auth.currentUser == null) {
+//            Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
+//            navigateFragment(R.id.loginFragment)
+//        } else {
+//            dRef.addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    snapshot.children.forEach {
+//
+//                    }
+//
+//                    Log.d("TAG", "Controlsum: ${snapshot.value.toString()}")
+////          binding.apply {
+////              rcViewTest.append("\n")
+////              rcViewTest.append("${auth.currentUser?.email?.toString()}: ${snapshot.value.toString()}")
+////          }
+//
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+//                }
+//
+//            })
+//        }
+//    }
 }
