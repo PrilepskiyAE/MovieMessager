@@ -31,7 +31,7 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
     lateinit var launcher: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth= Firebase.auth
+
 
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val task=GoogleSignIn.getSignedInAccountFromIntent(it.data)

@@ -24,8 +24,8 @@ class UserListFragment : FragmentBaseNCMVVM<UserListViewModel, FragmentUserListB
     override val viewModel: UserListViewModel by viewModels()
     private val database: FirebaseDatabase = Firebase.database
     private val myRef = database.getReference("users")
-    private var users:MutableList<UserModel> = mutableListOf()
-    private val userAdapter=UsersAdapter {
+
+    private val userAdapter = UsersAdapter {
         navigateFragment(UserListFragmentDirections.actionUserListFragmentToNavigationMessage(it))
     }
 
@@ -46,36 +46,15 @@ class UserListFragment : FragmentBaseNCMVVM<UserListViewModel, FragmentUserListB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        onChangeListener(myRef)
-    }
-    private fun onChangeListener(dRef: DatabaseReference){
-        auth= Firebase.auth
-
-        if (auth.currentUser==null){
+        viewModel.initListUsers({
+            userAdapter.submitList(it)
+        }, {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }, {
             Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
             navigateFragment(R.id.loginFragment)
-        }else{
-            dRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEach {
-                        users.add(UserModel( it.child("username").value.toString(),it.child("email").value.toString()))
-                    }
-                    Log.d("TAG", "onChangeListener: $users")
-                    Log.d("TAG", "Controlsum: ${snapshot.value.toString()}")
-                    userAdapter.submitList(users)
-//          binding.apply {
-//              rcViewTest.append("\n")
-//              rcViewTest.append("${auth.currentUser?.email?.toString()}: ${snapshot.value.toString()}")
-//          }
+        })
 
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-                }
-
-            })
-        }
     }
+
 }

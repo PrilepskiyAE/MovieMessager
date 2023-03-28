@@ -107,6 +107,11 @@ class UseCaseModule {
     fun provideSignInWithGoogleUseCaseModule(authenticationRepository: AuthenticationRepository): SignInWithGoogleUseCase =
         SignInWithGoogleUseCaseImpl(authenticationRepository)
 
+    @Provides
+    fun provideInitListUsersFirebaseUseCaseModule(authenticationRepository: AuthenticationRepository): InitListUsersFirebaseUseCase =
+        InitListUsersFirebaseUseCaseImpl(authenticationRepository)
+
+
 }
 
 

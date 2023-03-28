@@ -15,7 +15,7 @@ abstract class FragmentBaseNCMVVM<ViewModel : BaseViewModel, ViewBind : ViewBind
     FragmentBaseMVVM<ViewModel, ViewBind>() {
 
     private lateinit var navController: NavController
-    lateinit var auth: FirebaseAuth
+  //  lateinit var auth: FirebaseAuth
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
 
