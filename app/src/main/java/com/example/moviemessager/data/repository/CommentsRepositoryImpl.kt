@@ -1,18 +1,49 @@
 package com.example.moviemessager.data.repository
 
+import android.util.Log
+import com.example.moviemessager.data.firebaseservise.FirebaseService
 import com.example.moviemessager.domain.model.UserModel
+import com.example.moviemessager.domain.model.UserModelFirebase
 import com.example.moviemessager.domain.repository.CommentsRepository
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import javax.inject.Inject
 
 class CommentsRepositoryImpl@Inject constructor(): CommentsRepository {
     override suspend fun initListComment( movieId: String,
-                                          success: (comment: List<String>) -> Unit,
+                                          success: (String) -> Unit,
                                           error: (error: String) -> Unit,
                                           noUser: () -> Unit) {
-        TODO("Not yet implemented")
+        val message:MutableList<String> = mutableListOf()
+
+        if (FirebaseService.getFirebaseAuth().currentUser==null){
+            noUser()
+        }else{
+            FirebaseService.getReference("movie_$movieId").addValueEventListener(object :
+                ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    Log.d("TAG99", "onDataChangess: ${snapshot.children}")
+                    snapshot.children.forEach {
+                        Log.d("TAG99", "onDataChange: ${it.value.toString()} ")
+                        message.add(it.value.toString())
+                        success(it.value.toString())
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    error(error.message)
+                }
+
+            })
+        }
+
     }
 
+
     override suspend fun sendComment(movieId: String,message:String) {
-        TODO("Not yet implemented")
+
+        FirebaseService.getReference("movie_$movieId").child( FirebaseService.getReference("movie_$movieId").push().key ?: "omnonom").setValue(FirebaseService.getFirebaseAuth().currentUser?.email + " : " + message)
     }
 }

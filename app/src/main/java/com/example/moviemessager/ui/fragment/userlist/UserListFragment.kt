@@ -22,8 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class UserListFragment : FragmentBaseNCMVVM<UserListViewModel, FragmentUserListBinding>() {
     override val binding: FragmentUserListBinding by viewBinding()
     override val viewModel: UserListViewModel by viewModels()
-    private val database: FirebaseDatabase = Firebase.database
-    private val myRef = database.getReference("users")
+
 
     private val userAdapter = UsersAdapter {
         navigateFragment(UserListFragmentDirections.actionUserListFragmentToNavigationMessage(it))
