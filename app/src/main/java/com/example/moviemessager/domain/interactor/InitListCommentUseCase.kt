@@ -1,11 +1,10 @@
-package com.example.moviemessager.domain.repository
+package com.example.moviemessager.domain.interactor
 
 import com.example.moviemessager.domain.model.UserModel
 
-interface CommentsRepository {
-    suspend fun initListComment( movieId: String,
+interface InitListCommentUseCase {
+    suspend operator fun invoke( movieId: String,
                                  success: (comment: List<String>) -> Unit,
                                  error: (error: String) -> Unit,
                                  noUser: () -> Unit)
-    suspend fun sendComment(movieId: String,message:String)
 }

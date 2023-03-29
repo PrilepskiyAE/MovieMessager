@@ -26,10 +26,18 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
         binding.tvyear.text="Year relis: ${args.movie.release_date}"
         binding.tvOverview.text= args.movie.overview
         setPoster(args.movie.poster_path,binding.ivPoster)
+        viewModel.initListComment(args.movie.id.toString(),{},{},{})
     }
     fun  setPoster( img:String, imageView: ImageView)
     {
         Glide.with(imageView).load("https://image.tmdb.org/t/p/w500"+img)
             .into(imageView.findViewById<ImageView>(R.id.ivPoster))
+    }
+
+    override fun onViewClick() {
+        binding.btComent.setOnClickListener {
+            viewModel.sendComment(args.movie.id.toString(),binding.edComment.editText?.text.toString())
+        }
+
     }
 }
