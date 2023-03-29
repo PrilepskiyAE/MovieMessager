@@ -112,6 +112,19 @@ class UseCaseModule {
         InitListUsersFirebaseUseCaseImpl(authenticationRepository)
 
 
+
+
+    @Provides
+    fun provideInitListCommentUseCaseModule(commentsRepository:CommentsRepository): InitListCommentUseCase =
+        InitListCommentUseCaseImpl(commentsRepository)
+
+
+
+    @Provides
+    fun provideSendCommentUseCaseModule(commentsRepository:CommentsRepository): SendCommentUseCase =
+        SendCommentUseCaseImpl(commentsRepository)
+
+
 }
 
 

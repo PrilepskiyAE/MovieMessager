@@ -73,16 +73,20 @@
             <TextView
                 android:id="@+id/tvOverview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="#0F57E6" />
 
             <TextView
                 android:id="@+id/tvComents"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edComment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
