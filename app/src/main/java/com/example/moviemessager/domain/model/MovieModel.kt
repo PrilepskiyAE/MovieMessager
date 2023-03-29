@@ -20,7 +20,7 @@ sealed class MovieUImodel :  BaseAdapterTypes(){
     val video:Boolean = false,
     val vote_average:Double = 0.0,
     val vote_count:Int = 0
-) : MovieUImodel() {
+) : MovieUImodel() ,Serializable{
     companion object{
         fun from(data:MovieResponse):MovieModel=with(data){
             MovieModel(
