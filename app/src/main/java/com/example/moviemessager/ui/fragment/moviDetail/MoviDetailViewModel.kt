@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MoviDetailViewModel@Inject constructor(private val initListCommentUseCase: InitListCommentUseCase,private val sendCommentUseCase: SendCommentUseCase) : BaseViewModel() {
     fun initListComment(movieId: String,
-                        success: (comment: List<String>) -> Unit,
+                        success:(String) -> Unit,
                         error: (error: String) -> Unit,
                         noUser: () -> Unit){
         viewModelScope.launch{

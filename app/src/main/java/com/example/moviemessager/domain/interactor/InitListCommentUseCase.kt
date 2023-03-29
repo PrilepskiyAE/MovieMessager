@@ -4,7 +4,7 @@ import com.example.moviemessager.domain.model.UserModel
 
 interface InitListCommentUseCase {
     suspend operator fun invoke( movieId: String,
-                                 success: (comment: List<String>) -> Unit,
+                                 success: (String) -> Unit,
                                  error: (error: String) -> Unit,
                                  noUser: () -> Unit)
 }

@@ -10,7 +10,7 @@ class InitListCommentUseCaseImpl @Inject constructor(private val commentReposito
     InitListCommentUseCase {
     override suspend fun invoke(
         movieId: String,
-        success: (comment: List<String>) -> Unit,
+        success: (String) -> Unit,
         error: (error: String) -> Unit,
         noUser: () -> Unit
     ) {
