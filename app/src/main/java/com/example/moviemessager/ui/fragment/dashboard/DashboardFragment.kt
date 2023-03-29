@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>() {
     override val binding: FragmentDashboardBinding by viewBinding()
     override val viewModel: DashboardViewModel by viewModels()
-    private val movieAdapter=MoviePagingAdapter({},{
+    private val movieAdapter=MoviePagingAdapter({navigateFragment(DashboardFragmentDirections.actionNavigationDashboardToMoviDetailFragment(it))},{
         viewModel.loadMovie(it)
     })
     override fun onCreate(savedInstanceState: Bundle?) {

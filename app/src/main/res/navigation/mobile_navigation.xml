@@ -15,7 +15,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.moviemessager.ui.fragment.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_moviDetailFragment"
+            app:destination="@id/moviDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_message"
         android:name="com.example.moviemessager.ui.fragment.message.MessageFragment"
@@ -45,7 +49,15 @@
             android:id="@+id/action_userListFragment_to_navigation_message"
             app:destination="@id/navigation_message" />
     </fragment>
-
+    <fragment
+        android:id="@+id/moviDetailFragment"
+        android:name="com.example.moviemessager.ui.fragment.moviDetail.MoviDetailFragment"
+        android:label="fragment_movi_detail"
+        tools:layout="@layout/fragment_movi_detail" >
+        <argument
+            android:name="movie"
+            app:argType="com.example.moviemessager.domain.model.MovieUImodel$MovieModel" />
+    </fragment>
 
 
 </navigation>

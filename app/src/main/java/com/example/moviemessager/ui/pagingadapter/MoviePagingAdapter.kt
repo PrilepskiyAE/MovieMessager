@@ -59,6 +59,12 @@ class MoviePagingAdapter(
                         Glide.with(itemView)
                             .load("https://image.tmdb.org/t/p/w500"+item.poster_path)
                             .into(filmCover)
+
+                            filmCover.setOnClickListener {
+
+                                    onClickButtonClicked(item)
+                                }
+
                     }
                             else -> {}
                         }}
