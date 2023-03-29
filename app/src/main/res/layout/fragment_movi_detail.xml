@@ -80,11 +80,6 @@
                 android:layout_height="1dp"
                 android:background="#0F57E6" />
 
-            <TextView
-                android:id="@+id/tvComents"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edComment"
                 android:layout_width="match_parent"
@@ -93,7 +88,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="hint" />
+                    android:hint="Comment" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -101,6 +96,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="send comment" />
+
+            <TextView
+                android:id="@+id/tvComents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 

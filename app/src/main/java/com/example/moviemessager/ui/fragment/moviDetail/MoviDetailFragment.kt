@@ -19,6 +19,15 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
     override val binding: FragmentMoviDetailBinding by viewBinding()
     override val viewModel: MoviDetailViewModel by viewModels()
     val args: MoviDetailFragmentArgs by navArgs()
+    override fun onEach() {
+        onEach(viewModel.comments){
+            Log.d("TAG99", "onEach: $it ")
+            binding.tvComents.append("\n")
+            binding.tvComents.append(it)
+            binding.tvComents.append("\n")
+        }
+
+    }
     override fun onView() {
 
         Log.d("TAG99", "onView: ${args.movie}")
@@ -27,14 +36,7 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
         binding.tvyear.text = "Year relis: ${args.movie.release_date}"
         binding.tvOverview.text = args.movie.overview
         setPoster(args.movie.poster_path, binding.ivPoster)
-        viewModel.initListComment(args.movie.original_title, { coments ->
-
-            Log.d("TAG99", "onView:$coments ")
-
-                binding.tvComents.append("\n")
-                binding.tvComents.append(coments)
-
-        }, { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }, {
+        viewModel.initListComment(args.movie.original_title, { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }, {
             Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
             navigateFragment(R.id.loginFragment)
         }
@@ -48,7 +50,7 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
 
     override fun onViewClick() {
         binding.btComent.setOnClickListener {
-            binding.tvComents.text=""
+           binding.tvComents.text=""
             viewModel.sendComment(
                 args.movie.original_title,
                 binding.edComment.editText?.text.toString()
