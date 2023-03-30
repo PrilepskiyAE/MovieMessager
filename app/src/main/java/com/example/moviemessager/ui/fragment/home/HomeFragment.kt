@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -23,11 +24,29 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     override val binding: FragmentHomeBinding by viewBinding()
     override val viewModel: HomeViewModel by viewModels()
 
-    override fun onView() {// viewModel.test()
+    override fun onEach() {
+       onEach(viewModel.email){
+           binding.tvName.text=it
+       }
+    }
+
+    override fun onView() {
+        viewModel.getEmail()
         viewModel.isAuth {
             navigateFragment(R.id.loginFragment)
         }
 
+    }
+
+    override fun onViewClick() {
+        binding.imbExit.setOnClickListener {
+            viewModel.logout {
+                Toast.makeText(requireContext(), "Exit", Toast.LENGTH_SHORT).show()
+                viewModel.isAuth {
+                    navigateFragment(R.id.loginFragment)
+                }
+            }
+        }
     }
 
 

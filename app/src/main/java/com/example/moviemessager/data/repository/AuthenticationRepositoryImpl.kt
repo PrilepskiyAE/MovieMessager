@@ -75,6 +75,10 @@ class AuthenticationRepositoryImpl @Inject constructor() : AuthenticationReposit
         return FirebaseService.isAuth()
     }
 
+    override suspend fun getEmail(): String {
+       return FirebaseService.getFirebaseAuth().currentUser?.email.toString()
+    }
+
     override suspend fun initListUsersFirebase(success: (users:List<UserModel>) -> Unit, error: (error:String) -> Unit, noUser: () -> Unit) {
         val users:MutableList<UserModel> = mutableListOf()
 

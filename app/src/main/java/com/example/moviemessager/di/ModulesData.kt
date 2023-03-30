@@ -111,7 +111,9 @@ class UseCaseModule {
     fun provideInitListUsersFirebaseUseCaseModule(authenticationRepository: AuthenticationRepository): InitListUsersFirebaseUseCase =
         InitListUsersFirebaseUseCaseImpl(authenticationRepository)
 
-
+    @Provides
+    fun provideGetEmailUseCaseModule(authenticationRepository: AuthenticationRepository): GetEmailUseCase =
+        GetEmailUseCaseImpl(authenticationRepository)
 
 
     @Provides
@@ -123,6 +125,7 @@ class UseCaseModule {
     @Provides
     fun provideSendCommentUseCaseModule(commentsRepository:CommentsRepository): SendCommentUseCase =
         SendCommentUseCaseImpl(commentsRepository)
+
 
 
 }
