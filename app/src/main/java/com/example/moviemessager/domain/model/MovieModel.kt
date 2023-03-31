@@ -1,5 +1,6 @@
 package com.example.moviemessager.domain.model
 
+import com.example.moviemessager.data.dbservise.MovieEntity
 import com.example.moviemessager.data.response.MovieResponse
 import com.example.moviemessager.data.utils.getUniqueId
 import java.io.Serializable
@@ -39,6 +40,31 @@ sealed class MovieUImodel :  BaseAdapterTypes(){
                 vote_average = vote_average?:0.0,
                 vote_count = vote_count
             )
+        }
+        fun from(data:MovieEntity):MovieModel=with(data){
+            MovieModel(
+                id = getUniqueId(),
+                adult = adult,
+                backdrop_path = backdrop_path?:"",
+                genre_ids = genre_ids,
+                original_title = original_title?:"",
+                original_language = original_language?:"",
+                overview = overview?:"",
+                popularity = popularity,
+                poster_path = poster_path?:"",
+                release_date = release_date?:"",
+                title = title?:"",
+                video = video,
+                vote_average = vote_average?:0.0,
+                vote_count = vote_count
+            )
+        }
+        fun from(data:List<MovieEntity>):List<MovieModel> {
+            val temp:MutableList<MovieModel> = mutableListOf()
+            data.forEach {
+                temp.add(MovieModel.from(it))
+            }
+            return temp
         }
     }
 
