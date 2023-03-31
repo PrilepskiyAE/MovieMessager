@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SearchFavoriteMovieUseCaseImpl@Inject constructor(private val favoriteRepository: FavoriteRepository): SearchFavoriteMovieUseCase {
-    override suspend fun invoke(value: String): Flow<MovieUImodel.MovieModel> {
+    override suspend fun invoke(value: String): Flow<MovieUImodel.MovieModel?> {
      return withContext(Dispatchers.IO) {favoriteRepository.searchFavoriteMovie(value)}
     }
 }

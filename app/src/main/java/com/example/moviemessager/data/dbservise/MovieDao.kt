@@ -10,9 +10,9 @@ abstract class MovieDao:BaseDao<MovieEntity>() {
     @Query("SELECT * FROM movie_table")
     abstract fun getAllMovie(): Flow<List<MovieEntity>>
 
-    @Query("SELECT * FROM movie_table WHERE title=:data")
+    @Query("SELECT * FROM movie_table WHERE original_title=:data")
     abstract fun getMovieByTitle(data:String): Flow<MovieEntity>
 
-    @Query("DELETE FROM movie_table WHERE title=:data")
+    @Query("DELETE FROM movie_table WHERE original_title=:data")
     abstract suspend fun deleteMovie(data:String)
 }

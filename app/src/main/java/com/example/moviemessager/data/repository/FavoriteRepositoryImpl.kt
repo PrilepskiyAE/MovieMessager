@@ -23,7 +23,7 @@ class FavoriteRepositoryImpl@Inject constructor(private val db: FavoriteDataBase
 
 
 
-    override suspend fun searchFavoriteMovie(value: String): Flow<MovieUImodel.MovieModel> = db.movieDao.getMovieByTitle(value).map {
+    override suspend fun searchFavoriteMovie(value: String): Flow<MovieUImodel.MovieModel?> = db.movieDao.getMovieByTitle(value).map {
         MovieUImodel.MovieModel.from(it)
     }
 }
