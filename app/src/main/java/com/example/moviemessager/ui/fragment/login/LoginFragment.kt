@@ -62,6 +62,9 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
             viewModel.signInWithGoogle(launcher, getClient())
         }
         binding.btLogin.setOnClickListener {
+            val isEmptyLogin = !binding.etLogin.text.isNullOrEmpty()
+            val isEmptyPassword = !binding.etPass.text.isNullOrEmpty()
+            if (isEmptyLogin && isEmptyPassword) {
             viewModel.loginBasicAuth(
                 binding.etLogin.text.toString(),
                 binding.etPass.text.toString(),
@@ -72,6 +75,7 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
                 {
                     binding.HintError.text = "firebaseAuthWithGoogle: nok"
                 })
+            }else{binding.HintError.text="Empty password or login"}
         }
         binding.btReg.setOnClickListener {
 

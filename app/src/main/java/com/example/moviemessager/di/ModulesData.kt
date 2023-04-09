@@ -4,16 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import com.example.moviemessager.data.apiservise.MovieApiService
 import com.example.moviemessager.data.dbservise.FavoriteDataBase
-import com.example.moviemessager.data.repository.AuthenticationRepositoryImpl
-import com.example.moviemessager.data.repository.CommentsRepositoryImpl
-import com.example.moviemessager.data.repository.MessageRepositoryImpl
-import com.example.moviemessager.data.repository.MovieRepositoryImpl
+import com.example.moviemessager.data.repository.*
 import com.example.moviemessager.data.utils.HeaderInterceptor
 import com.example.moviemessager.domain.interactor.*
-import com.example.moviemessager.domain.repository.AuthenticationRepository
-import com.example.moviemessager.domain.repository.CommentsRepository
-import com.example.moviemessager.domain.repository.MessageRepository
-import com.example.moviemessager.domain.repository.MovieRepository
+import com.example.moviemessager.domain.repository.*
 import com.example.moviemessager.domain.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -87,7 +81,8 @@ class  MovieRepositoryModule {
     @Provides
     fun provideMessageRepositoryModule(): MessageRepository = MessageRepositoryImpl()
 
-
+    @Provides
+    fun provideFavoriteRepositoryModule(db:FavoriteDataBase): FavoriteRepository = FavoriteRepositoryImpl(db)
 
 
 }
@@ -142,6 +137,17 @@ class UseCaseModule {
         SendCommentUseCaseImpl(commentsRepository)
 
 
+    @Provides
+    fun provideDislikeMovieUseCaseModule(favoriteRepository:FavoriteRepository): DislikeMovieUseCase =
+        DislikeMovieUseCaseImpl(favoriteRepository)
+
+    @Provides
+    fun provideLikeMovieUseCaseModule(favoriteRepository:FavoriteRepository): LikeMovieUseCase =
+        LikeMovieUseCaseImpl(favoriteRepository)
+
+    @Provides
+    fun provideSearchFavoriteMovieUseCaseModule(favoriteRepository:FavoriteRepository): SearchFavoriteMovieUseCase =
+        SearchFavoriteMovieUseCaseImpl(favoriteRepository)
 
 }
 
