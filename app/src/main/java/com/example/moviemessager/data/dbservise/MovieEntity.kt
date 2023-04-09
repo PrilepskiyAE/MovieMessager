@@ -1,13 +1,17 @@
 package com.example.moviemessager.data.dbservise
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.example.moviemessager.data.response.MovieResponse
 import com.example.moviemessager.data.utils.getUniqueId
 import com.example.moviemessager.domain.model.MovieUImodel
 
 
 @Entity(tableName = "movie_table")
+@TypeConverters(MovieEntityConverter::class)
 data class MovieEntity(
+        @PrimaryKey
         val id: Long,
         val adult:Boolean = false,
         val backdrop_path: String,
