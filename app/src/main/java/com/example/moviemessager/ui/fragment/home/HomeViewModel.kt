@@ -5,12 +5,15 @@ import androidx.lifecycle.viewModelScope
 
 import com.example.moviemessager.domain.interactor.CheckIsLoginUseCase
 import com.example.moviemessager.domain.interactor.GetEmailUseCase
+import com.example.moviemessager.domain.interactor.GetListFavoriteMovieUseCase
 import com.example.moviemessager.domain.interactor.LogoutUseCase
+import com.example.moviemessager.domain.model.MovieUImodel
 
 import com.example.moviemessager.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,12 +21,19 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
     private val isLogin: CheckIsLoginUseCase,
-    private val getEmailUseCase: GetEmailUseCase
+    private val getEmailUseCase: GetEmailUseCase,
+    private val getListFavoriteMovieUseCase: GetListFavoriteMovieUseCase
 ) : BaseViewModel() {
 
     private val _email: MutableStateFlow<String> = MutableStateFlow("")
 
     val email = _email.asStateFlow()
+
+
+    private val _listFavoriteMovie: MutableStateFlow<List<MovieUImodel.MovieModel>?> by lazy {
+        MutableStateFlow(null)
+    }
+    val listFavoriteMovie = _listFavoriteMovie.asStateFlow()
 
     fun getEmail() {
         viewModelScope.launch {
@@ -47,4 +57,12 @@ class HomeViewModel @Inject constructor(
 
     }
 
+    fun getFavorite() {
+        viewModelScope.launch {
+            getListFavoriteMovieUseCase().collectLatest {
+                _listFavoriteMovie.emit(it)
+            }
+
+        }
+    }
 }

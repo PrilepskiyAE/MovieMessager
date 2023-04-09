@@ -71,7 +71,8 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
 
         }
         binding.btFavorite.setOnClickListener {
-            val state = viewModel.isFavorite.value
+            val state = !viewModel.isFavorite.value
+
             if (state) {
                 viewModel.likeMovie(args.movie)
             } else {
