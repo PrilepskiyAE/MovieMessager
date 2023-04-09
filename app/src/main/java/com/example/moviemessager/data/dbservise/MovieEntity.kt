@@ -25,10 +25,11 @@ data class MovieEntity(
         val title: String,
         val video:Boolean = false,
         val vote_average:Double = 0.0,
-        val vote_count:Int = 0
+        val vote_count:Int = 0,
+        val user: String
     ){
         companion object{
-                fun from(data: MovieUImodel.MovieModel): MovieEntity =with(data){
+                fun from(data: MovieUImodel.MovieModel,user: String): MovieEntity =with(data){
                         MovieEntity(
                                 id = id,
                                 adult = adult,
@@ -43,7 +44,8 @@ data class MovieEntity(
                                 title = title ?: "",
                                 video = video,
                                 vote_average = vote_average ?: 0.0,
-                                vote_count = vote_count
+                                vote_count = vote_count,
+                                user = user
                         )
                 }
         }

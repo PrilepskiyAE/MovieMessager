@@ -38,4 +38,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imbExit" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_items_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:spanCount="2"
+        tools:itemCount="100"
+        tools:listitem="@layout/item_movie" />
 </androidx.constraintlayout.widget.ConstraintLayout>

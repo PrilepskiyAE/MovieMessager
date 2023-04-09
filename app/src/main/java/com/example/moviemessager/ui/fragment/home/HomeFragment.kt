@@ -13,6 +13,8 @@ import com.example.moviemessager.R
 import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
+import com.example.moviemessager.ui.fragment.dashboard.DashboardFragmentDirections
+import com.example.moviemessager.ui.pagingadapter.MoviePagingAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -23,11 +25,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     override val binding: FragmentHomeBinding by viewBinding()
     override val viewModel: HomeViewModel by viewModels()
+ //   private val movieAdapter= MoviePagingAdapter({navigateFragment(DashboardFragmentDirections.actionNavigationDashboardToMoviDetailFragment(it))},{
 
+   // })
     override fun onEach() {
        onEach(viewModel.email){
            binding.tvName.text=it
        }
+        onEach(viewModel.listFavoriteMovie){
+           // movieAdapter.submitData(it)
+        }
     }
 
     override fun onView() {
@@ -35,6 +42,7 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
         viewModel.isAuth {
             navigateFragment(R.id.loginFragment)
         }
+        viewModel.getFavorite()
 
     }
 
