@@ -34,48 +34,64 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
 
 
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            val task=GoogleSignIn.getSignedInAccountFromIntent(it.data)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             try {
-                val account=task.getResult(ApiException::class.java)
-                if (account!=null){
-                   // firebaseAuthWithGoogle(account.idToken!!)
-                    viewModel.firebaseAuthWithGoogle(account.idToken!!,{
-                        binding.HintError.text="firebaseAuthWithEmail: ok"
+                val account = task.getResult(ApiException::class.java)
+                if (account != null) {
+                    // firebaseAuthWithGoogle(account.idToken!!)
+                    viewModel.firebaseAuthWithGoogle(account.idToken!!, {
+                        binding.HintError.text = "firebaseAuthWithEmail: ok"
                         popBackStack()
-                    },{
-                        binding.HintError.text="firebaseAuthWithGoogle: nok"
+                    }, {
+                        binding.HintError.text = "firebaseAuthWithGoogle: nok"
                     })
                 }
-            } catch (e:ApiException){
-                binding.HintError.text=e.message
+            } catch (e: ApiException) {
+                binding.HintError.text = e.message
                 Log.d("TAG", "onView: ${e.localizedMessage}")
             }
         }
     }
+
     override fun onView() {
 
     }
+
     override fun onViewClick() {
         binding.btLoginGoogle.setOnClickListener {
-            viewModel.signInWithGoogle(launcher,getClient())
+            viewModel.signInWithGoogle(launcher, getClient())
         }
         binding.btLogin.setOnClickListener {
-           viewModel.loginBasicAuth(binding.etLogin.text.toString(),binding.etPass.text.toString(),{
-               binding.HintError.text="firebaseAuthWithEmail: ok"
-               popBackStack()
-           },{
-               binding.HintError.text="firebaseAuthWithGoogle: nok"
-           })
+            viewModel.loginBasicAuth(
+                binding.etLogin.text.toString(),
+                binding.etPass.text.toString(),
+                {
+                    binding.HintError.text = "firebaseAuthWithEmail: ok"
+                    popBackStack()
+                },
+                {
+                    binding.HintError.text = "firebaseAuthWithGoogle: nok"
+                })
         }
         binding.btReg.setOnClickListener {
-           viewModel.registerBasicAuth(binding.etLogin.text.toString(),binding.etPass.text.toString(),{
-               binding.HintError.text="firebaseAuthWithEmail: ok"
-               popBackStack()
-           },{
-               binding.HintError.text="firebaseAuthWithGoogle: nok"
-           })
+
+            val isEmptyLogin = !binding.etLogin.text.isNullOrEmpty()
+            val isEmptyPassword = !binding.etPass.text.isNullOrEmpty()
+            if (isEmptyLogin && isEmptyPassword) {
+                viewModel.registerBasicAuth(
+                    binding.etLogin.text.toString(),
+                    binding.etPass.text.toString(),
+                    {
+                        binding.HintError.text = "firebaseAuthWithEmail: ok"
+                        popBackStack()
+                    },
+                    {
+                        binding.HintError.text = "firebaseAuthWithGoogle: nok"
+                    })
+            }else{binding.HintError.text="Empty password or login"}
         }
     }
+
     private fun getClient(): GoogleSignInClient {
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
