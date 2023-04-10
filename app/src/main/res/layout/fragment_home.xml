@@ -38,19 +38,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imbExit" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_items_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/tvFavoriteLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FAVORITE"
+        android:textColor="#1BA9AE"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        app:spanCount="2"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_items_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/tvFavoriteLabel"
         tools:itemCount="100"
-        tools:listitem="@layout/item_movie" />
+        tools:listitem="@layout/item_movie_favorite" />
 </androidx.constraintlayout.widget.ConstraintLayout>

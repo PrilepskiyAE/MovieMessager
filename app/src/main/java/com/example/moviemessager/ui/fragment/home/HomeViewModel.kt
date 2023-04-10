@@ -59,7 +59,7 @@ class HomeViewModel @Inject constructor(
 
     fun getFavorite() {
         viewModelScope.launch {
-            getListFavoriteMovieUseCase().collectLatest {
+            getListFavoriteMovieUseCase().collect{
                 _listFavoriteMovie.emit(it)
             }
 

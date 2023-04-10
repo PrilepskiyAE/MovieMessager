@@ -1,6 +1,7 @@
 package com.example.moviemessager.ui.fragment.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviemessager.R
 import com.example.moviemessager.databinding.FragmentHomeBinding
+import com.example.moviemessager.ui.adapter.MovieFavoriteAdapter
 import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
 import com.example.moviemessager.ui.fragment.dashboard.DashboardFragmentDirections
@@ -25,15 +28,28 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     override val binding: FragmentHomeBinding by viewBinding()
     override val viewModel: HomeViewModel by viewModels()
- //   private val movieAdapter= MoviePagingAdapter({navigateFragment(DashboardFragmentDirections.actionNavigationDashboardToMoviDetailFragment(it))},{
+    private val movieAdapter = MovieFavoriteAdapter {
+        navigateFragment(
+            HomeFragmentDirections.actionNavigationHomeToMoviDetailFragment(it)
+        )
+    }
 
-   // })
+    private fun setAdapter() {
+        binding.rvItemsList.apply {
+            adapter = movieAdapter
+        }
+
+    }
+
+
     override fun onEach() {
-       onEach(viewModel.email){
-           binding.tvName.text=it
-       }
-        onEach(viewModel.listFavoriteMovie){
-           // movieAdapter.submitData(it)
+        onEach(viewModel.email) {
+            binding.tvName.text = it
+        }
+        onEach(viewModel.listFavoriteMovie) {
+
+            movieAdapter.submitList(it)
+
         }
     }
 
@@ -43,7 +59,7 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
             navigateFragment(R.id.loginFragment)
         }
         viewModel.getFavorite()
-
+        setAdapter()
     }
 
     override fun onViewClick() {

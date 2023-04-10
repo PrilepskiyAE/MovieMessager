@@ -149,6 +149,10 @@ class UseCaseModule {
     fun provideSearchFavoriteMovieUseCaseModule(favoriteRepository:FavoriteRepository): SearchFavoriteMovieUseCase =
         SearchFavoriteMovieUseCaseImpl(favoriteRepository)
 
+    @Provides
+    fun provideGetListFavoriteMovieUseCaseModule(favoriteRepository:FavoriteRepository): GetListFavoriteMovieUseCase =
+        GetListFavoriteMovieUseCaseImpl(favoriteRepository)
+
 }
 
 
