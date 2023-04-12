@@ -23,10 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel@Inject constructor(private val getListMovieUseCase: GetListMovieUseCase) : BaseViewModel() {
 
-    data class ListsViewState(
-        val bookList:Flow<PagingData<MovieUImodel>>?=null,
-        val bannerList: List<Int>?=null
-    )
+
     private val _movieList:  MutableStateFlow<PagingData<MovieUImodel>?> by lazy {
         MutableStateFlow(
             null
@@ -44,6 +41,7 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
                 .cachedIn(this)
 
                 .collectLatest { pagingData ->
+                    pagingData
                    _movieList.value=pagingData
                 }
         }

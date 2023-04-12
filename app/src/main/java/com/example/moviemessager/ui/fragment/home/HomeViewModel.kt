@@ -2,15 +2,16 @@ package com.example.moviemessager.ui.fragment.home
 
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.filter
+import com.example.moviemessager.domain.interactor.*
 
-import com.example.moviemessager.domain.interactor.CheckIsLoginUseCase
-import com.example.moviemessager.domain.interactor.GetEmailUseCase
-import com.example.moviemessager.domain.interactor.GetListFavoriteMovieUseCase
-import com.example.moviemessager.domain.interactor.LogoutUseCase
 import com.example.moviemessager.domain.model.MovieUImodel
 
 import com.example.moviemessager.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -22,6 +23,7 @@ class HomeViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
     private val isLogin: CheckIsLoginUseCase,
     private val getEmailUseCase: GetEmailUseCase,
+    private val getListMovieUseCase: GetListMovieUseCase,
     private val getListFavoriteMovieUseCase: GetListFavoriteMovieUseCase
 ) : BaseViewModel() {
 
@@ -34,7 +36,13 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(null)
     }
     val listFavoriteMovie = _listFavoriteMovie.asStateFlow()
+    private val _movieList:  MutableStateFlow<PagingData<MovieUImodel>?> by lazy {
+        MutableStateFlow(
+            null
+        )
+    }
 
+    var movieList = _movieList.asStateFlow()
     fun getEmail() {
         viewModelScope.launch {
             _email.emit(getEmailUseCase())
@@ -59,10 +67,35 @@ class HomeViewModel @Inject constructor(
 
     fun getFavorite() {
         viewModelScope.launch {
-            getListFavoriteMovieUseCase().collect{
+            getListFavoriteMovieUseCase().collect {
                 _listFavoriteMovie.emit(it)
             }
 
+        }
+    }
+
+    fun loadMovie(genres: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            getListMovieUseCase(genres = genres)
+
+                .cachedIn(this)
+
+                .collectLatest { pagingData ->
+                    val topMovie = pagingData.filter {
+
+                        return@filter when (it) {
+                            is MovieUImodel.MovieModel -> {
+                                it.popularity > 8
+                            }
+                            else -> {
+                                false
+                            }
+                        }
+                    }
+
+                    _movieList.value=topMovie
+                }
         }
     }
 }

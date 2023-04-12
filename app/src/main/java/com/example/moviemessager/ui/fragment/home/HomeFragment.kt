@@ -1,16 +1,9 @@
 package com.example.moviemessager.ui.fragment.home
 
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviemessager.R
 import com.example.moviemessager.databinding.FragmentHomeBinding
 import com.example.moviemessager.ui.adapter.MovieFavoriteAdapter
@@ -18,25 +11,26 @@ import com.example.moviemessager.ui.base.FragmentBaseNCMVVM
 import com.example.moviemessager.ui.base.viewBinding
 import com.example.moviemessager.ui.fragment.dashboard.DashboardFragmentDirections
 import com.example.moviemessager.ui.pagingadapter.MoviePagingAdapter
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     override val binding: FragmentHomeBinding by viewBinding()
     override val viewModel: HomeViewModel by viewModels()
-    private val movieAdapter = MovieFavoriteAdapter {
+    private val movieFavoriteAdapter = MovieFavoriteAdapter {
         navigateFragment(
             HomeFragmentDirections.actionNavigationHomeToMoviDetailFragment(it)
         )
     }
 
+    private val movieAdapter= MoviePagingAdapter({navigateFragment( HomeFragmentDirections.actionNavigationHomeToMoviDetailFragment(it))},{
+
+    })
     private fun setAdapter() {
-        binding.rvItemsList.apply {
-            adapter = movieAdapter
+        binding.rvItemsListFavorite
+            .apply {
+            adapter = movieFavoriteAdapter
         }
 
     }
@@ -48,7 +42,29 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
         }
         onEach(viewModel.listFavoriteMovie) {
 
-            movieAdapter.submitList(it)
+            movieFavoriteAdapter.submitList(it)
+
+        }
+        onEach(viewModel.movieList){
+            it.also {
+                if (binding.rvItemsListTop.adapter == null)
+                    binding.rvItemsListTop.apply {
+                        layoutManager = GridLayoutManager(context, 2)
+                        adapter = movieFavoriteAdapter
+
+                    }
+
+            }
+            lifecycleScope.launch {
+                if (it != null) {
+
+                    movieAdapter.submitData(it)
+
+                }else{
+                    Toast.makeText(requireContext(), "connect server error", Toast.LENGTH_LONG).show()}
+            }
+
+
 
         }
     }
