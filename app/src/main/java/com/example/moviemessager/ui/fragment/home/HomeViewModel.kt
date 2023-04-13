@@ -76,17 +76,15 @@ class HomeViewModel @Inject constructor(
 
     fun loadMovie(genres: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-
             getListMovieUseCase(genres = genres)
 
                 .cachedIn(this)
 
-                .collectLatest { pagingData ->
+                .collect { pagingData ->
                     val topMovie = pagingData.filter {
-
                         return@filter when (it) {
                             is MovieUImodel.MovieModel -> {
-                                it.popularity > 8
+                                it.popularity > 5000
                             }
                             else -> {
                                 false

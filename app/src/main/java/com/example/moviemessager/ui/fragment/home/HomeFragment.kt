@@ -30,7 +30,8 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
     private fun setAdapter() {
         binding.rvItemsListFavorite
             .apply {
-            adapter = movieFavoriteAdapter
+                layoutManager = GridLayoutManager(context, 4)
+                adapter = movieFavoriteAdapter
         }
 
     }
@@ -49,8 +50,8 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
             it.also {
                 if (binding.rvItemsListTop.adapter == null)
                     binding.rvItemsListTop.apply {
-                        layoutManager = GridLayoutManager(context, 2)
-                        adapter = movieFavoriteAdapter
+                        layoutManager = GridLayoutManager(context, 4)
+                        adapter = movieAdapter
 
                     }
 
@@ -75,6 +76,7 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
             navigateFragment(R.id.loginFragment)
         }
         viewModel.getFavorite()
+        //viewModel.loadMovie(0)
         setAdapter()
     }
 
