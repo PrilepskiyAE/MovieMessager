@@ -15,7 +15,7 @@ class FavoriteRepositoryImpl@Inject constructor(private val db: FavoriteDataBase
     }
 
     override suspend fun dislikeMovie(movie: MovieUImodel.MovieModel) {
-        db.movieDao.deleteMovie(data = movie.title,FirebaseService.getFirebaseAuth().currentUser?.email.toString())
+        db.movieDao.deleteMovie(data = movie.id.toString(),FirebaseService.getFirebaseAuth().currentUser?.email.toString())
     }
 
     override suspend fun getListFavoriteMovie(): Flow<List<MovieUImodel.MovieModel>> = db.movieDao.getAllMovie(FirebaseService.getFirebaseAuth().currentUser?.email.toString()).map {
