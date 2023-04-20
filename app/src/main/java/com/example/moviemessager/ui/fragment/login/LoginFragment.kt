@@ -3,6 +3,7 @@ package com.example.moviemessager.ui.fragment.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,12 +44,18 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
                         binding.HintError.text = "firebaseAuthWithEmail: ok"
                         popBackStack()
                     }, {
-                        binding.HintError.text = "firebaseAuthWithGoogle: nok"
+                        showErrorDialog("Error Action", "Auch error", false, {  }, {
+                            Toast.makeText(requireContext(), "Auch error", Toast.LENGTH_SHORT)
+                                .show()
+                        })
                     })
                 }
             } catch (e: ApiException) {
                 binding.HintError.text = e.message
-                Log.d("TAG", "onView: ${e.localizedMessage}")
+                showErrorDialog("Error Action", "Auch error", false, {  }, {
+                    Toast.makeText(requireContext(), "Auch error", Toast.LENGTH_SHORT)
+                        .show()
+                })
             }
         }
     }
@@ -74,8 +81,18 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
                 },
                 {
                     binding.HintError.text = "firebaseAuthWithGoogle: nok"
+                    showErrorDialog("Error Action", "firebaseAuthWithGoogle: nok", false, {  }, {
+                        Toast.makeText(requireContext(), "Auch error", Toast.LENGTH_SHORT)
+                            .show()
+                    })
                 })
-            }else{binding.HintError.text="Empty password or login"}
+            }else{
+                binding.HintError.text="Empty password or login"
+                showErrorDialog("Error Action", "Empty password or login", false, {  }, {
+                    Toast.makeText(requireContext(), "Auch error", Toast.LENGTH_SHORT)
+                        .show()
+                })
+            }
         }
         binding.btReg.setOnClickListener {
 
@@ -91,8 +108,18 @@ class LoginFragment() : FragmentBaseNCMVVM<LoginViewModel, FragmentLoginBinding>
                     },
                     {
                         binding.HintError.text = "firebaseAuthWithGoogle: nok"
+                        showErrorDialog("Error Action", "firebaseAuthWithGoogle: nok", false, {  }, {
+                            Toast.makeText(requireContext(), "firebaseAuthWithGoogle: nok", Toast.LENGTH_SHORT)
+                                .show()
+                        })
                     })
-            }else{binding.HintError.text="Empty password or login"}
+            }else{
+                binding.HintError.text="Empty password or login"
+                showErrorDialog("Error Action", "Empty password or login", false, {  }, {
+                    Toast.makeText(requireContext(), "Empty password or login", Toast.LENGTH_SHORT)
+                        .show()
+                })
+            }
         }
     }
 

@@ -13,4 +13,7 @@
     <string name="email_hint">input email</string>
     <string name="reg_btn">registration</string>
     <string name="aunt_error">aunt error</string>
+    <string name="try_again">try</string>
+    <string name="Error_title">Error</string>
+    <string name="Errorr_message">Connect to server</string>
 </resources>

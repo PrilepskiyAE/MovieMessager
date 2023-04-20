@@ -31,7 +31,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>(),SwipeRefreshLayout.OnRefreshListener {
+class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboardBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
     override val binding: FragmentDashboardBinding by viewBinding()
     override val viewModel: DashboardViewModel by viewModels()
     private val movieAdapter = MoviePagingAdapter({
@@ -62,7 +63,7 @@ class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboa
                             }
 
                         })
-                        adapter = movieAdapter.withLoadStateFooter(LoaderStateAdapter{
+                        adapter = movieAdapter.withLoadStateFooter(LoaderStateAdapter {
                             movieAdapter.retry()
                         })
 
@@ -89,7 +90,7 @@ class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboa
         viewModel.loadMovie(0)
         movieAdapter.retry()
         //binding.swipeRefresh.isRefreshing=false
-       binding.swipeRefresh.stopRefresh()
+        binding.swipeRefresh.stopRefresh()
     }
 
     override fun onResume() {
@@ -97,24 +98,27 @@ class DashboardFragment : FragmentBaseNCMVVM<DashboardViewModel, FragmentDashboa
         setLoadingStateListener()
     }
 
-private fun setLoadingStateListener(){
-    movieAdapter.setLoadStateListener(
-        onErrorAction = {
-            Log.d("TAG", "setLoadingStateListener: onErrorAction  $it")
-            Toast.makeText(requireContext(), "Error connect to server", Toast.LENGTH_SHORT).show()
-        },
-        onSuccessAction = {
-            Log.d("TAG", "setLoadingStateListener: onSuccessAction  ")
-            binding.swipeRefresh.stopRefresh()
-        },
-        onNoDataAction = {
-            Log.d("TAG", "setLoadingStateListener: onNoDataAction  ")
-            Toast.makeText(requireContext(), "No Data Action", Toast.LENGTH_SHORT).show()
-        }
+    private fun setLoadingStateListener() {
+        movieAdapter.setLoadStateListener(
+            onErrorAction = {
+                showErrorDialog("Error Action", it, true, { viewModel.loadMovie(0) }, {
+                    Toast.makeText(requireContext(), "Error connect to server", Toast.LENGTH_SHORT)
+                        .show()
+                })
 
-    )
-    movieAdapter.addOnLoadingStateListener()
-}
+            },
+            onSuccessAction = {
+                Log.d("TAG", "setLoadingStateListener: onSuccessAction  ")
+                binding.swipeRefresh.stopRefresh()
+            },
+            onNoDataAction = {
+                Log.d("TAG", "setLoadingStateListener: onNoDataAction  ")
+                Toast.makeText(requireContext(), "No Data Action", Toast.LENGTH_SHORT).show()
+            }
+
+        )
+        movieAdapter.addOnLoadingStateListener()
+    }
 
     override fun onPause() {
         super.onPause()
@@ -122,6 +126,7 @@ private fun setLoadingStateListener(){
     }
 
 }
+
 fun SwipeRefreshLayout.stopRefresh() {
     Handler(Looper.getMainLooper()).postDelayed({
         this.isRefreshing = false
