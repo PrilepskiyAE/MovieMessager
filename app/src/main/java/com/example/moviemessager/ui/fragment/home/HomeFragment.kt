@@ -24,13 +24,11 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
         )
     }
 
-    private val movieAdapter= MoviePagingAdapter({navigateFragment( HomeFragmentDirections.actionNavigationHomeToMoviDetailFragment(it))},{
 
-    })
     private fun setAdapter() {
         binding.rvItemsListFavorite
             .apply {
-                layoutManager = GridLayoutManager(context, 4)
+                layoutManager = GridLayoutManager(context, 2)
                 adapter = movieFavoriteAdapter
         }
 
@@ -42,35 +40,40 @@ class HomeFragment : FragmentBaseNCMVVM<HomeViewModel, FragmentHomeBinding>() {
             binding.tvName.text = it
         }
         onEach(viewModel.listFavoriteMovie) {
-
+           if (!it.isNullOrEmpty()){
+            binding.tvFavoriteLabel.text="Favorite"
+           }
             movieFavoriteAdapter.submitList(it)
 
         }
-        onEach(viewModel.movieList){
-            it.also {
-                if (binding.rvItemsListTop.adapter == null)
-                    binding.rvItemsListTop.apply {
-                        layoutManager = GridLayoutManager(context, 4)
-                        adapter = movieAdapter
-
-                    }
-
-            }
-            lifecycleScope.launch {
-                if (it != null) {
-
-                    movieAdapter.submitData(it)
-
-                }else{
-                    Toast.makeText(requireContext(), "connect server error", Toast.LENGTH_LONG).show()}
-            }
-
-
-
-        }
+//        onEach(viewModel.movieList){
+//            it.also {
+//                if (binding.rvItemsListTop.adapter == null)
+//                    binding.rvItemsListTop.apply {
+//                        layoutManager = GridLayoutManager(context, 4)
+//                        adapter = movieAdapter
+//
+//                    }
+//
+//            }
+//            lifecycleScope.launch {
+//                if (it != null) {
+//
+//                    movieAdapter.submitData(it)
+//
+//                }else{
+//                    Toast.makeText(requireContext(), "connect server error", Toast.LENGTH_LONG).show()}
+//            }
+//
+//
+//
+//        }
     }
 
     override fun onView() {
+        if(viewModel.listFavoriteMovie.value?.size==0 || viewModel.listFavoriteMovie.value==null){
+            binding.tvFavoriteLabel.text="No items favorite"
+        }
         viewModel.getEmail()
         viewModel.isAuth {
             navigateFragment(R.id.loginFragment)

@@ -1,5 +1,6 @@
 package com.example.moviemessager.ui.dashboard
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,11 +39,12 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
 
             getListMovieUseCase(genres = genres)
 
-                .cachedIn(this)
+                .cachedIn(this).onEach {  }
 
-                .collectLatest { pagingData ->
-                    pagingData
-                   _movieList.value=pagingData
+                .collectLatest {
+
+                   _movieList.value=it
+
                 }
         }
     }
@@ -53,6 +55,6 @@ class DashboardViewModel@Inject constructor(private val getListMovieUseCase: Get
 
 
     companion object{
-        const val TAG ="HomeViewModel"
+        const val TAG ="DashboardViewModel"
     }
 }

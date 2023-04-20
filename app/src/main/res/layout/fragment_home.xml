@@ -54,50 +54,15 @@
         android:id="@+id/rv_items_list_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/tvFavoriteLabel"
-        tools:itemCount="100"
-        tools:listitem="@layout/item_movie_favorite" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="wrap_content"
-        android:layout_height="3dp"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:background="#304FFE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_items_list_favorite" />
 
-    <TextView
-        android:id="@+id/tvTopLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TOP MOVIE"
-        android:textColor="#1BA9AE"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_items_list_favorite" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_items_list_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:orientation="horizontal"
-
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/tvTopLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvFavoriteLabel"
         tools:itemCount="100"
         tools:listitem="@layout/item_movie_favorite" />
 

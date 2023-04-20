@@ -25,7 +25,7 @@ sealed class MovieUImodel :  BaseAdapterTypes(){
     companion object{
         fun from(data:MovieResponse):MovieModel=with(data){
             MovieModel(
-                id = getUniqueId(),
+                id = data.id.toLong(),
                 adult = adult,
                 backdrop_path = backdrop_path?:"",
                 genre_ids = genre_ids,
@@ -43,7 +43,7 @@ sealed class MovieUImodel :  BaseAdapterTypes(){
         }
         fun from(data:MovieEntity):MovieModel=with(data){
             MovieModel(
-                id = getUniqueId(),
+                id = data.id,
                 adult = adult,
                 backdrop_path = backdrop_path?:"",
                 genre_ids = genre_ids,

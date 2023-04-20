@@ -18,10 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviDetailBinding>() {
     override val binding: FragmentMoviDetailBinding by viewBinding()
     override val viewModel: MoviDetailViewModel by viewModels()
-    val args: MoviDetailFragmentArgs by navArgs()
+    private val args: MoviDetailFragmentArgs by navArgs()
     override fun onEach() {
         onEach(viewModel.comments) {
-            Log.d("TAG99", "onEach: $it ")
             binding.tvComents.append("\n")
             binding.tvComents.append(it)
             binding.tvComents.append("\n")
@@ -38,15 +37,14 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
 
     override fun onView() {
 
-        Log.d("TAG99", "onView: ${args.movie}")
         binding.tvTitle.text = "Name :${args.movie.title}"
         binding.tvOrigenalTitle.text = "Original name: ${args.movie.original_title}"
         binding.tvyear.text = "Year relis: ${args.movie.release_date}"
         binding.tvOverview.text = args.movie.overview
         setPoster(args.movie.poster_path, binding.ivPoster)
-        viewModel.searchFavoriteMovie(args.movie.original_title)
+        viewModel.searchFavoriteMovie(args.movie.id.toString())
         viewModel.initListComment(
-            args.movie.original_title,
+            args.movie.id.toString(),
             { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() },
             {
                 Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
@@ -64,7 +62,7 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
         binding.btComent.setOnClickListener {
             binding.tvComents.text = ""
             viewModel.sendComment(
-                args.movie.original_title,
+                args.movie.id.toString(),
                 binding.edComment.editText?.text.toString()
             )
             //Toast.makeText(requireContext(), "send ok", Toast.LENGTH_SHORT).show()
@@ -74,7 +72,9 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
             val state = !viewModel.isFavorite.value
 
             if (state) {
+
                 viewModel.likeMovie(args.movie)
+
             } else {
                 viewModel.dislikeMovie(args.movie)
             }
@@ -82,4 +82,7 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
 
 
     }
+    companion object{
+        const val TAG = "MoviDetailFragment"
+}
 }

@@ -31,6 +31,7 @@ class MoviDetailViewModel@Inject constructor(private val initListCommentUseCase:
                         error: (error: String) -> Unit,
                         noUser: () -> Unit){
         viewModelScope.launch{
+            _comments.emit("")
             initListCommentUseCase(movieId, {
             _comments.value=it
             }, error, noUser)
@@ -38,6 +39,7 @@ class MoviDetailViewModel@Inject constructor(private val initListCommentUseCase:
     }
     fun sendComment(movieId: String,message:String){
         viewModelScope.launch{
+            _comments.emit("")
             sendCommentUseCase(message, movieId )
         }
     }
@@ -60,7 +62,6 @@ class MoviDetailViewModel@Inject constructor(private val initListCommentUseCase:
     fun searchFavoriteMovie(value:String){
         viewModelScope.launch{
           searchFavoriteMovieUseCase(value).collectLatest {
-              Log.d("TAG88", "searchFavoriteMovie: $it")
               _isFavorite.emit(it!=null)
           }
         }
