@@ -23,9 +23,8 @@ class CommentsRepositoryImpl@Inject constructor(): CommentsRepository {
             FirebaseService.getReference("movie_$movieId").addValueEventListener(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    Log.d("TAG99", "onDataChangess: ${snapshot.children}")
+
                     snapshot.children.forEach {
-                        Log.d("TAG99", "onDataChange: ${it.value.toString()} ")
                         message.add(it.value.toString())
                         success(it.value.toString())
                     }

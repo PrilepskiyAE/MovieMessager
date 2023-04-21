@@ -24,6 +24,7 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
             binding.tvComents.append("\n")
             binding.tvComents.append(it)
             binding.tvComents.append("\n")
+            //TODO подумать
         }
         onEach(viewModel.isFavorite) {
             if (it) {

@@ -63,32 +63,5 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
 //
 //    }
 //
-//    private fun onChangeListener(dRef: DatabaseReference) {
-//        auth = Firebase.auth
-//
-//        if (auth.currentUser == null) {
-//            Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
-//            navigateFragment(R.id.loginFragment)
-//        } else {
-//            dRef.addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    snapshot.children.forEach {
-//
-//                    }
-//
-//                    Log.d("TAG", "Controlsum: ${snapshot.value.toString()}")
-////          binding.apply {
-////              rcViewTest.append("\n")
-////              rcViewTest.append("${auth.currentUser?.email?.toString()}: ${snapshot.value.toString()}")
-////          }
-//
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-//                }
-//
-//            })
-//        }
-//    }
+
 }
