@@ -48,13 +48,11 @@ class UserListFragment : FragmentBaseNCMVVM<UserListViewModel, FragmentUserListB
         viewModel.initListUsers({
             userAdapter.submitList(it)
         }, {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             showErrorDialog("Error Action", it, false, {  }, {
-                Toast.makeText(requireContext(), "Empty password or login", Toast.LENGTH_SHORT)
-                    .show()
+
             })
         }, {
-            Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
+
             navigateFragment(R.id.loginFragment)
         })
 

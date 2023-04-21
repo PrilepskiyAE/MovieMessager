@@ -17,10 +17,10 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/retry_btn"
 
-        android:layout_width="120dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/space_120"
+        android:layout_height="@dimen/space_50"
         android:text="retry"
-        app:cornerRadius="10dp"
+        app:cornerRadius="@dimen/space_10"
         app:elevation="@dimen/space_5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/space_5"
-        android:text="Something went wrong. Please Try again"
+        android:text="@string/something_went_wrong_please_try_again"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/retry_btn" />

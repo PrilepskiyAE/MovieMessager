@@ -5,9 +5,9 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginStart="@dimen/space_5"
+    android:layout_marginEnd="@dimen/space_5"
+    android:layout_marginBottom="@dimen/space_5"
     app:cardCornerRadius="1.5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,9 +25,9 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="Имя пользователя"
+            android:paddingTop="@dimen/space_5"
+            android:paddingBottom="@dimen/space_5"
+            tools:text="Имя пользователя"
             android:textColor="#4E342E"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

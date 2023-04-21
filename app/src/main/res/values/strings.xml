@@ -16,4 +16,10 @@
     <string name="try_again">try</string>
     <string name="Error_title">Error</string>
     <string name="Errorr_message">Connect to server</string>
+    <string name="noname">NoName</string>
+    <string name="favorite">FAVORITE</string>
+    <string name="google_signin">Google Signin</string>
+    <string name="comment">Comment</string>
+    <string name="send_comment">send comment</string>
+    <string name="something_went_wrong_please_try_again">Something went wrong. Please Try again</string>
 </resources>

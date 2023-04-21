@@ -15,7 +15,7 @@ class InitListUsersFirebaseUseCaseImpl @Inject constructor(private val authentic
         error: (error:String) -> Unit,
         noUser: () -> Unit
     ) {
-        withContext(Dispatchers.IO) {
+        withContext(Dispatchers.Main) {
             authenticationRepository.initListUsersFirebase(success, error, noUser)
         }
     }

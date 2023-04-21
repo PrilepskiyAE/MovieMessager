@@ -11,8 +11,8 @@
         android:id="@+id/imbExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="@dimen/space_32"
+        android:layout_marginEnd="@dimen/space_32"
         android:src="@drawable/exit_to_app_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,8 +21,8 @@
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="NoName"
+        android:layout_marginStart="@dimen/space_32"
+        android:text="@string/noname"
         app:layout_constraintBottom_toBottomOf="@+id/imbExit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imbExit" />
@@ -30,10 +30,10 @@
     <View
         android:id="@+id/view"
         android:layout_width="wrap_content"
-        android:layout_height="3dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="@dimen/space_3"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginTop="@dimen/space_24"
+        android:layout_marginEnd="@dimen/space_8"
         android:background="#304FFE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,26 +43,29 @@
         android:id="@+id/tvFavoriteLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FAVORITE"
+        android:text="@string/favorite"
         android:textColor="#1BA9AE"
-        android:textSize="20sp"
+        android:textSize="@dimen/size_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_items_list_favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/space_8"
 
+        android:layout_marginBottom="@dimen/space_16"
         android:clipToPadding="false"
         android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvFavoriteLabel"
+        app:layout_constraintVertical_bias="0.0"
         tools:itemCount="100"
         tools:listitem="@layout/item_movie_favorite" />
 
