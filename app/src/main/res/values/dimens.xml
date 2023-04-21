@@ -15,4 +15,25 @@
     <dimen name="size_21">21sp</dimen>
     <dimen name="size_32">32sp</dimen>
     <dimen name="space_20">20dp</dimen>
+    <dimen name="spase_32">32dp</dimen>
+    <dimen name="spase_3">3dp</dimen>
+    <dimen name="space_3">3</dimen>
+    <dimen name="space_32">32dp</dimen>
+    <dimen name="space_8">8dp</dimen>
+    <dimen name="size_20">20sp</dimen>
+    <dimen name="space_16">16dp</dimen>
+    <dimen name="space_49">49dp</dimen>
+    <dimen name="space_149">143dp</dimen>
+    <dimen name="space_143">143dp</dimen>
+    <dimen name="space_189">189dp</dimen>
+    <dimen name="space_46">46dp</dimen>
+    <dimen name="space_168">168dp</dimen>
+    <dimen name="space_267">267dp</dimen>
+    <dimen name="space_10">10dp</dimen>
+    <dimen name="spase_1">1dp</dimen>
+    <dimen name="size_16">16sp</dimen>
+    <dimen name="size_5">5dp</dimen>
+    <dimen name="space_180">180dp</dimen>
+    <dimen name="space_200">200dp</dimen>
+    <dimen name="space_50">50dp</dimen>
 </resources>

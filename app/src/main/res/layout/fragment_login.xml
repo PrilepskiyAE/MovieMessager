@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btLoginGoogle"
         android:layout_width="wrap_content"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/space_49"
         android:layout_gravity="center"
 
         android:layout_margin="@dimen/space_24"
@@ -28,9 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="16dp"
-            android:text="Google Signin"
+            android:layout_marginStart="@dimen/space_8"
+            android:layout_marginEnd="@dimen/space_16"
+            android:text="@string/google_signin"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -92,8 +92,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btLogin"
-        android:layout_width="143dp"
-        android:layout_height="49dp"
+        android:layout_width="@dimen/space_149"
+        android:layout_height="@dimen/space_49"
         android:layout_gravity="center"
 
         android:layout_margin="@dimen/space_24"
@@ -124,8 +124,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btReg"
-        android:layout_width="143dp"
-        android:layout_height="49dp"
+        android:layout_width="@dimen/space_143"
+        android:layout_height="@dimen/space_49"
         android:layout_gravity="center"
 
         android:layout_margin="@dimen/space_24"
@@ -164,14 +164,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btLoginGoogle" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="209dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
