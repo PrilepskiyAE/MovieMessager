@@ -2,7 +2,6 @@ package com.example.moviemessager.domain.usecase
 
 import com.example.moviemessager.domain.interactor.SearchFavoriteMovieUseCase
 import com.example.moviemessager.domain.model.MovieUImodel
-import com.example.moviemessager.domain.repository.AuthenticationRepository
 import com.example.moviemessager.domain.repository.FavoriteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

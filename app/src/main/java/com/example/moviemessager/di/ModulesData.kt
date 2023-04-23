@@ -153,6 +153,16 @@ class UseCaseModule {
     fun provideGetListFavoriteMovieUseCaseModule(favoriteRepository:FavoriteRepository): GetListFavoriteMovieUseCase =
         GetListFavoriteMovieUseCaseImpl(favoriteRepository)
 
+
+    @Provides
+    fun provideInitListMessageUseCaseModule(messageRepository:MessageRepository): InitListMessageUseCase =
+        InitListMessageUseCaseImpl(messageRepository)
+
+    @Provides
+    fun provideSendMessageUseCaseModule(messageRepository:MessageRepository): SendMessageUseCase =
+        SendMessageUseCaseImpl(messageRepository)
+
+
 }
 
 
