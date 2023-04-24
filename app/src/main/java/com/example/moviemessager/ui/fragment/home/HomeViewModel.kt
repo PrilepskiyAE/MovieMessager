@@ -36,13 +36,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(null)
     }
     val listFavoriteMovie = _listFavoriteMovie.asStateFlow()
-    private val _movieList:  MutableStateFlow<PagingData<MovieUImodel>?> by lazy {
-        MutableStateFlow(
-            null
-        )
-    }
 
-    var movieList = _movieList.asStateFlow()
     fun getEmail() {
         viewModelScope.launch {
             _email.emit(getEmailUseCase())
@@ -74,26 +68,4 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun loadMovie(genres: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            getListMovieUseCase(genres = genres)
-
-                .cachedIn(this)
-
-                .collect { pagingData ->
-                    val topMovie = pagingData.filter {
-                        return@filter when (it) {
-                            is MovieUImodel.MovieModel -> {
-                                it.popularity > 5000
-                            }
-                            else -> {
-                                false
-                            }
-                        }
-                    }
-
-                    _movieList.value=topMovie
-                }
-        }
-    }
 }

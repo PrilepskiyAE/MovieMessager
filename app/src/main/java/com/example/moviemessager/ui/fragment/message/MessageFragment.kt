@@ -35,34 +35,11 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
 
    val args: MessageFragmentArgs by navArgs()
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        viewModel.isAuth {
-//            navigateFragment(R.id.loginFragment)
-//        }
-//        myRef =
-//            database.getReference("FROM_${auth.currentUser?.displayName ?: "Anonimus"}_TO_${args.user.username} ")
-//
-//        onChangeListener(myRef)
-//    }
-//
-//    override fun onView() {
-//        binding.btSend.setOnClickListener {
-//            myRef.child(myRef.push().key ?: "omnonom").setValue(
-//                MessageUserFirebase(
-//                    UserModelFirebase(
-//                        auth.currentUser?.displayName ?: "noname",
-//                        auth.currentUser?.email ?: "noEmail"
-//                    ),
-//                    UserModelFirebase(args.user.username, args.user.email),
-//                    binding.etMessage.text.toString()
-//                )
-//            )
-//        }
-//
-//
-//    }
-//
+    override fun onEach() {
+        onEach(viewModel.listMessage){
+            Log.d("TAG99", "onEach: ===========> ${it?.size} ")
+        }
+    }
     override fun onView() {
         viewModel.GetListMessage(args.user.uid) {
             showErrorDialog("error", it, true, { })
@@ -73,6 +50,10 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
         viewModel.sendMessage(
             to=args.user,
             message = binding.etMessage.text.toString())
+
+        viewModel.GetListMessage(args.user.uid) {
+            showErrorDialog("error", it, true, { })
+        }
         binding.etMessage.setText("")
     }
 

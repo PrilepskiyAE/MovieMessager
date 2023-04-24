@@ -1,19 +1,16 @@
 package com.example.moviemessager.data.repository
 
 import android.util.Log
-import android.widget.Toast
-import com.example.moviemessager.R
 import com.example.moviemessager.data.firebaseservise.FirebaseService
 import com.example.moviemessager.domain.model.MessageUser
 import com.example.moviemessager.domain.model.MessageUserFirebase
+import com.example.moviemessager.domain.model.UserModel
 import com.example.moviemessager.domain.model.UserModelFirebase
 import com.example.moviemessager.domain.repository.MessageRepository
-import com.google.firebase.auth.ktx.auth
+import com.example.moviemessager.ui.base.safeResume
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -39,36 +36,95 @@ class MessageRepositoryImpl @Inject constructor() : MessageRepository {
         val messageList = mutableListOf<MessageUser>()
         val auchUser = FirebaseService.getFirebaseAuth().currentUser
         val currentUserRef = FirebaseService.getReference("${auchUser?.uid}_${uid}")
-        val toUserRef = FirebaseService.getReference("$uid}_${auchUser?.uid}")
+        val toUserRef = FirebaseService.getReference("${uid}_${auchUser?.uid}")
 
-       val messageListUser1:List<MessageUser> = runBlocking { suspendCoroutine {
-       //TODO
-           it.resume(mutableListOf<MessageUser>())
+       val messageListUser1:List<MessageUser> = runBlocking { suspendCoroutine { list->
+
+           currentUserRef.addValueEventListener(object :ValueEventListener{
+               override fun onDataChange(snapshot: DataSnapshot) {
+                   val resultListUser:MutableList<MessageUser> = mutableListOf()
+                   snapshot.children.forEach {
+
+                        resultListUser.add(
+                            MessageUser(
+                                to=UserModel(
+                                    uid=it.child("to").child("uid").value.toString(),
+                                    email = it.child("to").child("email").value.toString(),
+                                    username = it.child("to").child("username").value.toString()
+                                ),
+                                from=UserModel(
+                                    uid=it.child("from").child("uid").value.toString(),
+                                    email = it.child("from").child("email").value.toString(),
+                                    username = it.child("from").child("username").value.toString()
+                                ),
+                                message = it.child("message").value.toString(),
+                                time = it.child("time").value.toString().toLong()
+                        )
+                        )
+                    }
+                   try {
+                       list.resume(resultListUser)
+                   }catch (e:java.lang.IllegalStateException)
+                   {
+                       Log.d(TAG, "onDataChange: ")
+
+                   }
+
+
+               }
+
+               override fun onCancelled(error: DatabaseError) {
+                   Log.d("TAG", "onCancelled1: $error ")
+                   error(error.message)
+               }
+           })
+
+
        }}
-        currentUserRef.addValueEventListener(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d(TAG, "onDataChange1: $snapshot")
-        //TODO messageListUser1
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("TAG", "onCancelled1: $error ")
-                error(error.message)
-            }
-        })
 
-        val messageListUser2:List<MessageUser> = runBlocking { suspendCoroutine { it.resume(mutableListOf<MessageUser>()) }}
-        toUserRef.addValueEventListener(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d(TAG, "onDataChange2: $snapshot")
-                //TODO messageListUser2
-            }
+        val messageListUser2:List<MessageUser> = runBlocking { suspendCoroutine {list->
+            toUserRef.addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val resultListUser:MutableList<MessageUser> = mutableListOf()
+                    snapshot.children.forEach {
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.d(TAG, "onCancelled2: $error")
-                error(error.message)
-            }
-        })
+                        resultListUser.add(
+                            MessageUser(
+                                to=UserModel(
+                                    uid=it.child("to").child("uid").value.toString(),
+                                    email = it.child("to").child("email").value.toString(),
+                                    username = it.child("to").child("username").value.toString()
+                                ),
+                                from=UserModel(
+                                    uid=it.child("from").child("uid").value.toString(),
+                                    email = it.child("from").child("email").value.toString(),
+                                    username = it.child("from").child("username").value.toString()
+                                ),
+                                message = it.child("message").value.toString(),
+                                time = it.child("time").value.toString().toLong()
+                            )
+                        )
+                    }
+
+                         try {
+                        list.resume(resultListUser)
+                    }catch (e:java.lang.IllegalStateException)
+                    {
+                        Log.d(TAG, "onDataChange: ")
+
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d(TAG, "onCancelled2: $error")
+                    error(error.message)
+                }
+            })
+
+        }}
+
 
         messageList.addAll(messageListUser1)
         messageList.addAll(messageListUser2)
