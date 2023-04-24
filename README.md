@@ -13,6 +13,7 @@
 ###      2.3) http client: Retrofit2;
 ###      2.4) Glide;
 ###      2.5) Firebase;
+###      2.6) Paging;
 ## 3) Asynchrony
 ###    3.1) Coroutines;
 ###    3.2) Flow;
