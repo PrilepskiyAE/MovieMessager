@@ -18,8 +18,6 @@
 ###    3.2) Flow;
 ###    3.3) StateFlow;
 ---
-# Project under development
----
 ![Image alt](https://github.com/PrilepskiyAE/MovieMessager/blob/master/screen/0.jpg)
 ![Image alt](https://github.com/PrilepskiyAE/MovieMessager/blob/master/screen/1.jpg)
 ![Image alt](https://github.com/PrilepskiyAE/MovieMessager/blob/master/screen/2.jpg)

@@ -44,6 +44,12 @@ class MoviDetailViewModel@Inject constructor(private val initListCommentUseCase:
         }
     }
 
+    fun clean(){
+        viewModelScope.launch{
+            _comments.emit("")
+        }
+    }
+
     fun likeMovie(movie: MovieUImodel.MovieModel){
         viewModelScope.launch{
             likeMovieUseCase(movie)
