@@ -10,9 +10,9 @@ import javax.inject.Inject
 
 class InitListMessageUseCaseImpl @Inject constructor(private val messageRepository: MessageRepository): InitListMessageUseCase {
     override suspend fun invoke(
-        userEmail: String,
+        uid: String,
         error: (error: String) -> Unit
     ): List<MessageUser> {
-        return withContext(Dispatchers.IO) {messageRepository.getMessagesListCurrentUser(userEmail, error)}
+        return withContext(Dispatchers.IO) {messageRepository.getMessagesListCurrentUser(uid, error)}
     }
 }

@@ -16,4 +16,5 @@ interface AuthenticationRepository {
     suspend fun initListUsersFirebase(success: (users:List<UserModel>) -> Unit, error: (error:String) -> Unit, noUser:()->Unit)
     suspend fun isLogin():Boolean
     suspend fun getEmail():String
+    suspend fun getUser():UserModel
 }

@@ -125,6 +125,10 @@ class UseCaseModule {
     fun provideGetEmailUseCaseModule(authenticationRepository: AuthenticationRepository): GetEmailUseCase =
         GetEmailUseCaseImpl(authenticationRepository)
 
+    @Provides
+    fun provideGetUserUseCaseModule(authenticationRepository: AuthenticationRepository): GetUserUseCase =
+        GetUserUseCaseImpl(authenticationRepository)
+
 
     @Provides
     fun provideInitListCommentUseCaseModule(commentsRepository:CommentsRepository): InitListCommentUseCase =

@@ -5,7 +5,7 @@ import com.example.moviemessager.domain.model.UserModel
 
 interface MessageRepository {
     suspend fun sendMessage(message:MessageUser)
-    suspend fun getMessagesListCurrentUser(userEmail:String,
+    suspend fun getMessagesListCurrentUser(uid:String,
                                            error: (error: String) -> Unit):List<MessageUser>
 
 }
