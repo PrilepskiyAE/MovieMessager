@@ -33,11 +33,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBinding>() {
     override val binding: FragmentMessageBinding by viewBinding()
     override val viewModel: MessageViewModel by viewModels()
+    lateinit var messageAdapter:MessageAdapter
    val args: MessageFragmentArgs by navArgs()
 
 
     override fun onEach() {
-        val messageAdapter:MessageAdapter= MessageAdapter(args.user)
+        messageAdapter= MessageAdapter(args.user)
         binding.rvItemsList.apply {
             context?.let {
                 layoutManager = LinearLayoutManager(it)
@@ -45,12 +46,15 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
             }
         }
         onEach(viewModel.listMessage){
-            Log.d("TAG99", "onEach: ===========> ${it?.size} ")
-            messageAdapter.submitList(it)
+            Log.d("TAG999", "onEach: ===========> ${it?.size} ")
+           // messageAdapter.submitList(it)
         }
     }
     override fun onView() {
-        viewModel.GetListMessage(args.user.uid) {
+        viewModel.GetListMessage(args.user.uid,{
+            Log.d("TAG999", "onViewClick: ${it.size} ")
+            messageAdapter.submitList(it)
+        }) {
             showErrorDialog("error", it, true, { })
         }
 
@@ -61,10 +65,12 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
             to=args.user,
             message = binding.etMessage.text.toString())
 
-        viewModel.GetListMessage(args.user.uid) {
+        viewModel.GetListMessage(args.user.uid,{
+            Log.d("TAG999", "onViewClick: ${it.size} ")
+            messageAdapter.submitList(it)
+        }) {
             showErrorDialog("error", it, true, { })
         }
-
         binding.etMessage.setText("")
     }
 
