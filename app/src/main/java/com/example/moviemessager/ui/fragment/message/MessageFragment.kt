@@ -31,10 +31,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBinding>() {
     override val binding: FragmentMessageBinding by viewBinding()
     override val viewModel: MessageViewModel by viewModels()
-    private val database: FirebaseDatabase = Firebase.database
-    lateinit var myRef: DatabaseReference
-//
-//    val args: MessageFragmentArgs by navArgs()
+
+
+   val args: MessageFragmentArgs by navArgs()
+
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)
 //        viewModel.isAuth {
@@ -63,5 +63,18 @@ class MessageFragment : FragmentBaseNCMVVM<MessageViewModel, FragmentMessageBind
 //
 //    }
 //
+    override fun onView() {
+        viewModel.GetListMessage(args.user.uid) {
+            showErrorDialog("error", it, true, { })
+        }
+}
+    override fun onViewClick() {
+    binding.btSend.setOnClickListener {
+        viewModel.sendMessage(
+            to=args.user,
+            message = binding.etMessage.text.toString())
+        binding.etMessage.setText("")
+    }
 
+    }
 }

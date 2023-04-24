@@ -22,11 +22,11 @@ import kotlin.coroutines.suspendCoroutine
 class MessageRepositoryImpl @Inject constructor() : MessageRepository {
     override suspend fun sendMessage(message: MessageUser) {
         val auchUser = FirebaseService.getFirebaseAuth().currentUser
-        val currentUserRef = FirebaseService.getReference("${auchUser?.email}_${message.to?.email}")
+        val currentUserRef = FirebaseService.getReference("${auchUser?.uid}_${message.to?.uid}")
         currentUserRef.child(currentUserRef.push().key ?: "omnonom").setValue(
             MessageUserFirebase(
-                UserModelFirebase(message.to?.username ?: "Empty", message.to?.email ?: "Empty"),
-                UserModelFirebase(auchUser?.displayName ?: "Empty", auchUser?.email ?: "Empty"),
+                UserModelFirebase(message.to?.uid?:"Empty",message.to?.username ?: "Empty", message.to?.email ?: "Empty"),
+                UserModelFirebase(auchUser?.uid?:"Empty",auchUser?.displayName ?: "Empty", auchUser?.email ?: "Empty"),
                 message.message,
                 message.time
             )
@@ -34,12 +34,12 @@ class MessageRepositoryImpl @Inject constructor() : MessageRepository {
 
     }
 
-    override suspend fun getMessagesListCurrentUser(userEmail: String,
+    override suspend fun getMessagesListCurrentUser(uid: String,
                                                     error: (error: String) -> Unit): List<MessageUser> {
         val messageList = mutableListOf<MessageUser>()
         val auchUser = FirebaseService.getFirebaseAuth().currentUser
-        val currentUserRef = FirebaseService.getReference("${auchUser?.email}_${userEmail}")
-        val toUserRef = FirebaseService.getReference("${userEmail}_${auchUser?.email}")
+        val currentUserRef = FirebaseService.getReference("${auchUser?.uid}_${uid}")
+        val toUserRef = FirebaseService.getReference("$uid}_${auchUser?.uid}")
 
        val messageListUser1:List<MessageUser> = runBlocking { suspendCoroutine {
        //TODO

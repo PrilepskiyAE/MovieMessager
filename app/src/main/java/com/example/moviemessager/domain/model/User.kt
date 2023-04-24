@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UserModel(val username:String,val email:String ): BaseAdapterTypes(), Parcelable
+data class UserModel(val uid:String,val username:String,val email:String ): BaseAdapterTypes(), Parcelable
 
 @Parcelize
-data class UserModelFirebase(val username:String,val email:String ): Parcelable
+data class UserModelFirebase(val uid:String,val username:String,val email:String ): Parcelable

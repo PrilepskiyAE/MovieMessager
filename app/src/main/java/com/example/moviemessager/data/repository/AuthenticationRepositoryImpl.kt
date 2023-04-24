@@ -35,7 +35,8 @@ class AuthenticationRepositoryImpl @Inject constructor() : AuthenticationReposit
                     .child(FirebaseService.getFirebaseAuth().currentUser?.uid ?: "omnomnom")
                     .setValue(
                         UserModelFirebase(
-                            FirebaseService.getFirebaseAuth().currentUser?.displayName ?: "noname",
+                            FirebaseService.getFirebaseAuth().uid?:"noUid",
+                            FirebaseService.getFirebaseAuth().currentUser?.displayName ?: "noName",
                             FirebaseService.getFirebaseAuth().currentUser?.email ?: "noEmail"
                         )
                     )
@@ -50,7 +51,7 @@ class AuthenticationRepositoryImpl @Inject constructor() : AuthenticationReposit
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener{ task ->
                 if(task.isSuccessful){
-                    FirebaseService.getReference("users").child(auth.currentUser?.uid?:"omnomnom").setValue(UserModelFirebase(auth.currentUser?.displayName?:"noname",auth.currentUser?.email?:"noEmail")?:"ololololo")
+                    FirebaseService.getReference("users").child(auth.currentUser?.uid?:"omnomnom").setValue(UserModelFirebase(auth.currentUser?.uid?:"noUid",auth.currentUser?.displayName?:"noName",auth.currentUser?.email?:"noEmail")?:"ololololo")
                     success()
                 }
             }
@@ -63,7 +64,7 @@ class AuthenticationRepositoryImpl @Inject constructor() : AuthenticationReposit
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener { task ->
                 if(task.isSuccessful){
-                    FirebaseService.getReference("users").child(auth.currentUser?.uid?:"omnomnom").setValue(UserModelFirebase(auth.currentUser?.displayName?:"noname",auth.currentUser?.email?:"noEmail")?:"ololololo")
+                    FirebaseService.getReference("users").child(auth.currentUser?.uid?:"omnomnom").setValue(UserModelFirebase(auth.currentUser?.uid?:"noUid",auth.currentUser?.displayName?:"noName",auth.currentUser?.email?:"noEmail")?:"ololololo")
                     success()
                 }
             }
@@ -79,6 +80,10 @@ class AuthenticationRepositoryImpl @Inject constructor() : AuthenticationReposit
        return FirebaseService.getFirebaseAuth().currentUser?.email.toString()
     }
 
+    override suspend fun getUser(): UserModel {
+        return UserModel(FirebaseService.getFirebaseAuth().currentUser?.uid?:"empty",FirebaseService.getFirebaseAuth().currentUser?.displayName?:"empty",FirebaseService.getFirebaseAuth().currentUser?.email.toString())
+    }
+
     override suspend fun initListUsersFirebase(success: (users:List<UserModel>) -> Unit, error: (error:String) -> Unit, noUser: () -> Unit) {
         val users:MutableList<UserModel> = mutableListOf()
 
@@ -89,7 +94,7 @@ class AuthenticationRepositoryImpl @Inject constructor() : AuthenticationReposit
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEach {
-                        users.add(UserModel( it.child("username").value.toString(),it.child("email").value.toString()))
+                        users.add(UserModel( it.child("uid").value.toString(),it.child("username").value.toString(),it.child("email").value.toString()))
                     }
                     success(users)
                 }
