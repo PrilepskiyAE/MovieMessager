@@ -51,12 +51,9 @@ class MessageViewModel@Inject constructor(
         }
     }
 
-    fun GetListMessage( uid: String,
-                        error: (error: String) -> Unit){
+    fun GetListMessage( uid:String,success:(list:List<MessageUser>)->Unit, error: (error: String) -> Unit){
         viewModelScope.launch {
-            _listMessage.emit(null)
-            _listMessage.emit(getListMessageUseCase(uid, error))
-
+            getListMessageUseCase(uid,success, error)
         }
     }
 }
