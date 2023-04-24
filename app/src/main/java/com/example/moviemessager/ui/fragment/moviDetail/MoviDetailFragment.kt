@@ -24,7 +24,7 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
             binding.tvComents.append("\n")
             binding.tvComents.append(it)
             binding.tvComents.append("\n")
-            //TODO подумать
+
         }
         onEach(viewModel.isFavorite) {
             if (it) {
@@ -37,7 +37,7 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
     }
 
     override fun onView() {
-
+        viewModel.clean()
         binding.tvTitle.text = "Name :${args.movie.title}"
         binding.tvOrigenalTitle.text = "Original name: ${args.movie.original_title}"
         binding.tvyear.text = "Year relis: ${args.movie.release_date}"
@@ -66,6 +66,7 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
                 args.movie.id.toString(),
                 binding.edComment.editText?.text.toString()
             )
+            binding.edComment.editText?.setText("")
             //Toast.makeText(requireContext(), "send ok", Toast.LENGTH_SHORT).show()
 
         }
@@ -82,6 +83,11 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
         }
 
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.clean()
     }
     companion object{
         const val TAG = "MoviDetailFragment"
