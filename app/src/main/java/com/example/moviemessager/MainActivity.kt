@@ -31,5 +31,19 @@ class MainActivity : AppCompatActivity() {
         )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setOnItemSelectedListener {
+            when (it.itemId){
+                R.id.navigation_home -> {
+                    navController.popBackStack(R.id.navigation_home,false, saveState = true)
+                }
+                R.id.navigation_dashboard->{
+                    navController.navigate(R.id.navigation_dashboard, null)
+                }
+                R.id.userListFragment->{
+                    navController.navigate(R.id.userListFragment, null)
+                }
+            }
+            true
+        }
     }
 }
