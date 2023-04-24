@@ -2,7 +2,10 @@ package com.example.moviemessager.ui.base
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
+import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.flow.Flow
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
 
 inline fun <reified T> Flow<T>.observeInLifecycle(
     lifecycleOwner: LifecycleOwner
@@ -16,4 +19,12 @@ inline fun <reified F> getCurrentFragment(navHostFragment: NavHostFragment): F? 
             null
         }
     } else null
+}
+inline fun <T> Continuation<T>.safeResume(value: T,onExceptionCalled: () -> Unit) {
+    if (this is CancellableContinuation) {
+        if (isActive)
+            resume(value)
+        else
+            onExceptionCalled()
+    } else throw Exception("Must use suspendCancellableCoroutine instead of suspendCoroutine")
 }
