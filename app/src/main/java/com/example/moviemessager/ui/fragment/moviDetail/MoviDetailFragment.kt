@@ -46,9 +46,8 @@ class MoviDetailFragment : FragmentBaseNCMVVM<MoviDetailViewModel, FragmentMoviD
         viewModel.searchFavoriteMovie(args.movie.id.toString())
         viewModel.initListComment(
             args.movie.id.toString(),
-            { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() },
+            { },
             {
-                Toast.makeText(requireContext(), "auth", Toast.LENGTH_SHORT).show()
                 navigateFragment(R.id.loginFragment)
             }
         )

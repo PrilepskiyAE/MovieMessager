@@ -14,7 +14,7 @@ class InitListCommentUseCaseImpl @Inject constructor(private val commentReposito
         error: (error: String) -> Unit,
         noUser: () -> Unit
     ) {
-        withContext(Dispatchers.IO) {
+        withContext(Dispatchers.Main) {
             commentRepository.initListComment(movieId, success, error, noUser)
         }
     }
