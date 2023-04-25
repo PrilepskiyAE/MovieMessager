@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.moviemessager.ui.fragment.home.HomeFragment"
+        android:name="com.prilepskiy.moviemessager.ui.fragment.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.moviemessager.ui.fragment.dashboard.DashboardFragment"
+        android:name="com.prilepskiy.moviemessager.ui.fragment.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -26,22 +26,22 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_message"
-        android:name="com.example.moviemessager.ui.fragment.message.MessageFragment"
+        android:name="com.prilepskiy.moviemessager.ui.fragment.message.MessageFragment"
         android:label="@string/title_message"
         tools:layout="@layout/fragment_message" >
         <argument
             android:name="user"
-            app:argType="com.example.moviemessager.domain.model.UserModel" />
+            app:argType="com.prilepskiy.moviemessager.domain.model.UserModel" />
     </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.moviemessager.ui.fragment.login.LoginFragment"
+        android:name="com.prilepskiy.moviemessager.ui.fragment.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/userListFragment"
-        android:name="com.example.moviemessager.ui.fragment.userlist.UserListFragment"
+        android:name="com.prilepskiy.moviemessager.ui.fragment.userlist.UserListFragment"
         android:label="fragment_user_list"
         tools:layout="@layout/fragment_user_list" >
         <action
@@ -50,12 +50,12 @@
     </fragment>
     <fragment
         android:id="@+id/moviDetailFragment"
-        android:name="com.example.moviemessager.ui.fragment.moviDetail.MoviDetailFragment"
+        android:name="com.prilepskiy.moviemessager.ui.fragment.moviDetail.MoviDetailFragment"
         android:label="fragment_movi_detail"
         tools:layout="@layout/fragment_movi_detail" >
         <argument
             android:name="movie"
-            app:argType="com.example.moviemessager.domain.model.MovieUImodel$MovieModel" />
+            app:argType="com.prilepskiy.moviemessager.domain.model.MovieUImodel$MovieModel" />
     </fragment>
 
 

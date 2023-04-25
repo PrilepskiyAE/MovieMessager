@@ -1,0 +1,40 @@
+package com.prilepskiy.moviemessager.ui.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.paging.LoadState
+import androidx.paging.LoadStateAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.prilepskiy.moviemessager.databinding.ItemPagingLoadingBinding
+
+class LoaderStateAdapter(
+    private val retry: () -> Unit
+): LoadStateAdapter<LoaderStateAdapter.LoaderViewHolder>() {
+
+    inner class LoaderViewHolder(
+        private val binding: ItemPagingLoadingBinding
+    ): RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(loadState: LoadState){
+
+            binding.errorMsg.isVisible = loadState is LoadState.Error
+            binding.retryBtn.isVisible = loadState is LoadState.Error
+            binding.progressBar.isVisible = loadState is LoadState.Loading
+
+            binding.retryBtn.setOnClickListener {
+                retry()
+            }
+        }
+    }
+
+    override fun onBindViewHolder(holder: LoaderViewHolder, loadState: LoadState) {
+        holder.bind(loadState)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoaderViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val view = ItemPagingLoadingBinding.inflate(inflater,parent, false)
+        return LoaderViewHolder(view)
+    }
+}

@@ -9,15 +9,15 @@ plugins {
 }
 
 android {
-    namespace 'com.example.moviemessager'
+    namespace 'com.prilepskiy.moviemessager'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.moviemessager"
+        applicationId "com.prilepskiy.moviemessager"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         compileSdkPreview = "UpsideDownCake"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

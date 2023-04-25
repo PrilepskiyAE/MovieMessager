@@ -8,22 +8,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:213769316395:android:ecfa17ace9350a286fe26e",
+        "mobilesdk_app_id": "1:213769316395:android:268285819ea4b9126fe26e",
         "android_client_info": {
-          "package_name": "com.example.moviemessager"
+          "package_name": "com.prilepskiy.moviemessager"
         }
       },
       "oauth_client": [
         {
-          "client_id": "213769316395-g9mrpcm80c5pj7bl3tmjs8npshs0gbs1.apps.googleusercontent.com",
+          "client_id": "213769316395-5sqr0s2hf0sn2cjfjispu31t7c2tv8ri.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.moviemessager",
-            "certificate_hash": "3d6f2d926657abb0fe0360a3ce955b96a0aa0bc7"
+            "package_name": "com.prilepskiy.moviemessager",
+            "certificate_hash": "23eb7cbe0c5bddb04d60e41f3e4d1f1f40e6f8fb"
           }
         },
         {
-          "client_id": "213769316395-rjirc2dgogim98e0hcgchigqsombfvis.apps.googleusercontent.com",
+          "client_id": "213769316395-fv809efg02p85noo7lj2diphb142p86h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
